@@ -6,8 +6,8 @@
   <title>Full-Stack Mastery Roadmap 2026</title>
   <meta name="description" content="Complete industry-level backend + React learning roadmap for 2026. Databases, architecture, APIs, and career guidance." />
   <meta name="theme-color" content="#0a0f1e" />
-  <link rel="manifest" href="/backend-learning/manifest.json" />
-  <link rel="apple-touch-icon" href="/backend-learning/assets/icons/icon-192.png" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="FS Roadmap" />
@@ -156,10 +156,11 @@
       font-size: 12px;
       font-weight: 700;
       cursor: pointer;
-      display: none;
+      display: block;
       letter-spacing: 0.5px;
     }
     .install-btn.show { display: block; }
+    .install-btn.hidden { display: none; }
 
     /* ---- Main Content ---- */
     #main {
@@ -2197,26 +2198,55 @@ supabase
 
   /* ============ PWA Install ============ */
   let deferredPrompt;
+  const installBtn = document.getElementById('installBtn');
+
+  function isStandaloneMode() {
+    return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  }
+
+  function getInstallHelpMessage() {
+    const ua = navigator.userAgent || '';
+    if (/iphone|ipad|ipod/i.test(ua)) {
+      return 'On iPhone or iPad, tap Share, then Add to Home Screen.';
+    }
+    if (/firefox/i.test(ua)) {
+      return 'Use the browser menu and choose Add to Home screen or Install, if available.';
+    }
+    return 'Use the browser menu and choose Install app. In Chrome or Edge, it may also appear at the right side of the address bar after the page finishes loading.';
+  }
+
+  if (isStandaloneMode()) {
+    installBtn.classList.add('hidden');
+  }
+
   window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
-    document.getElementById('installBtn').classList.add('show');
+    installBtn.classList.add('show');
   });
 
   async function installPWA() {
-    if (!deferredPrompt) return;
+    if (!deferredPrompt) {
+      alert(getInstallHelpMessage());
+      return;
+    }
     deferredPrompt.prompt();
     const { outcome } = await deferredPrompt.userChoice;
     if (outcome === 'accepted') {
-      document.getElementById('installBtn').classList.remove('show');
+      installBtn.classList.add('hidden');
     }
     deferredPrompt = null;
   }
 
+  window.addEventListener('appinstalled', () => {
+    installBtn.classList.add('hidden');
+    deferredPrompt = null;
+  });
+
   /* ============ Service Worker ============ */
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/backend-learning/sw.js', {
-      scope: '/backend-learning/'
+    navigator.serviceWorker.register('sw.js', {
+      scope: './'
     }).then(reg => {
       console.log('SW registered, scope:', reg.scope);
     }).catch(err => {

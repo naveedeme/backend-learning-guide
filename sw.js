@@ -1,14 +1,14 @@
 // Service Worker — Full-Stack Mastery PWA
-// Scoped to /backend-learning/
-const CACHE_NAME = 'fs-roadmap-v2';
-const BASE = '/backend-learning';
+// Scoped to whichever folder serves the app, including GitHub Pages project URLs.
+const CACHE_NAME = 'fs-roadmap-v3';
+const BASE_URL = self.registration.scope;
 const ASSETS = [
-  BASE + '/',
-  BASE + '/index.html',
-  BASE + '/manifest.json',
-  BASE + '/assets/icons/icon-192.png',
-  BASE + '/assets/icons/icon-512.png',
-];
+  './',
+  './index.html',
+  './manifest.json',
+  './icon-192.png',
+  './icon-512.png',
+].map((asset) => new URL(asset, BASE_URL).toString());
 
 self.addEventListener('install', (e) => {
   e.waitUntil(
@@ -47,7 +47,7 @@ self.addEventListener('fetch', (e) => {
           caches.open(CACHE_NAME).then(cache => cache.put(e.request, clone));
         }
         return response;
-      }).catch(() => caches.match(BASE + '/index.html'));
+      }).catch(() => caches.match(new URL('./index.html', BASE_URL).toString()));
     })
   );
 });
