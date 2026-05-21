@@ -1,0 +1,2218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Full-Stack Mastery Roadmap 2026</title>
+  <meta name="description" content="Complete industry-level backend + React learning roadmap for 2026. Databases, architecture, APIs, and career guidance." />
+  <meta name="theme-color" content="#0a0f1e" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       DESIGN SYSTEM — Dark Techno-Academic aesthetic
+       ============================================================ */
+    :root {
+      --bg:        #050912;
+      --bg2:       #0b1120;
+      --bg3:       #101828;
+      --surface:   #141f35;
+      --border:    #1e2d4a;
+      --border2:   #253550;
+      --text:      #dce6f7;
+      --muted:     #6b83a8;
+      --accent:    #38bdf8;       /* cyan  */
+      --accent2:   #a78bfa;       /* violet */
+      --accent3:   #34d399;       /* emerald */
+      --accent4:   #fb923c;       /* orange */
+      --accent5:   #f472b6;       /* pink */
+      --danger:    #f87171;
+      --warn:      #fbbf24;
+      --font-head: 'Syne', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-body: 'Space Mono', monospace;
+      --radius:    8px;
+      --radius-lg: 16px;
+      --glow-cyan: 0 0 20px rgba(56,189,248,0.25);
+      --glow-violet: 0 0 20px rgba(167,139,250,0.25);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 14px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ---- Scrollbar ---- */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg2); }
+    ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+
+    /* ---- Grid background ---- */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 40px 40px;
+      opacity: 0.18;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ============================================================  LAYOUT */
+    .app { display: flex; min-height: 100vh; position: relative; z-index: 1; }
+
+    /* ---- Sidebar Nav ---- */
+    #sidebar {
+      width: 270px;
+      min-height: 100vh;
+      background: var(--bg2);
+      border-right: 1px solid var(--border);
+      position: fixed;
+      top: 0; left: 0;
+      display: flex; flex-direction: column;
+      z-index: 100;
+      transition: transform 0.3s ease;
+      overflow-y: auto;
+    }
+
+    .sidebar-logo {
+      padding: 24px 20px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .sidebar-logo h1 {
+      font-family: var(--font-head);
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: -0.3px;
+      line-height: 1.3;
+    }
+    .sidebar-logo span {
+      font-size: 11px;
+      color: var(--muted);
+      font-family: var(--font-mono);
+    }
+
+    .nav-section-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 20px 20px 6px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 20px;
+      color: var(--muted);
+      text-decoration: none;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      border-left: 2px solid transparent;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .nav-item:hover { color: var(--text); background: rgba(255,255,255,0.03); }
+    .nav-item.active {
+      color: var(--accent);
+      border-left-color: var(--accent);
+      background: rgba(56,189,248,0.06);
+    }
+    .nav-item .nav-icon { font-size: 14px; width: 18px; text-align: center; }
+
+    .install-btn {
+      margin: 16px;
+      padding: 10px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #000;
+      border: none;
+      border-radius: var(--radius);
+      font-family: var(--font-head);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: none;
+      letter-spacing: 0.5px;
+    }
+    .install-btn.show { display: block; }
+
+    /* ---- Main Content ---- */
+    #main {
+      margin-left: 270px;
+      flex: 1;
+      padding: 0 40px 80px;
+      max-width: calc(100vw - 270px);
+    }
+
+    /* ---- Mobile hamburger ---- */
+    #hamburger {
+      display: none;
+      position: fixed;
+      top: 14px; left: 14px;
+      z-index: 200;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      width: 40px; height: 40px;
+      border-radius: var(--radius);
+      font-size: 18px;
+      cursor: pointer;
+      align-items: center; justify-content: center;
+    }
+
+    /* ============================================================  SECTIONS */
+    .section {
+      display: none;
+      animation: fadeIn 0.4s ease;
+    }
+    .section.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ============================================================  TYPOGRAPHY */
+    .page-hero {
+      padding: 60px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .page-hero .tag {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(56,189,248,0.1);
+      border: 1px solid rgba(56,189,248,0.25);
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+    .page-hero h2 {
+      font-family: var(--font-head);
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+    }
+    .page-hero p {
+      color: var(--muted);
+      max-width: 640px;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    h3 {
+      font-family: var(--font-head);
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      margin-top: 40px;
+      color: var(--text);
+    }
+    h4 {
+      font-family: var(--font-head);
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--accent3);
+    }
+    p { margin-bottom: 14px; color: var(--muted); }
+
+    /* ============================================================  COMPONENTS */
+
+    /* Cards */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin-bottom: 20px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .card:hover { border-color: var(--border2); box-shadow: var(--glow-cyan); }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    /* Badge */
+    .badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 500;
+      padding: 3px 10px;
+      border-radius: 12px;
+      letter-spacing: 0.5px;
+    }
+    .badge-cyan  { background: rgba(56,189,248,0.15); color: var(--accent); border: 1px solid rgba(56,189,248,0.3); }
+    .badge-violet{ background: rgba(167,139,250,0.15); color: var(--accent2); border: 1px solid rgba(167,139,250,0.3); }
+    .badge-green { background: rgba(52,211,153,0.15); color: var(--accent3); border: 1px solid rgba(52,211,153,0.3); }
+    .badge-orange{ background: rgba(251,146,60,0.15); color: var(--accent4); border: 1px solid rgba(251,146,60,0.3); }
+    .badge-pink  { background: rgba(244,114,182,0.15); color: var(--accent5); border: 1px solid rgba(244,114,182,0.3); }
+    .badge-red   { background: rgba(248,113,113,0.15); color: var(--danger); border: 1px solid rgba(248,113,113,0.3); }
+
+    /* Pill ratings */
+    .rating-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+
+    /* Tables */
+    .table-wrap { overflow-x: auto; margin-bottom: 32px; border: 1px solid var(--border); border-radius: var(--radius-lg); }
+    table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+    thead th {
+      background: var(--bg3);
+      color: var(--accent);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 14px 16px;
+      text-align: left;
+      white-space: nowrap;
+    }
+    tbody td {
+      padding: 12px 16px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      vertical-align: top;
+    }
+    tbody tr:hover td { background: rgba(255,255,255,0.02); color: var(--text); }
+    .col-name { color: var(--text); font-weight: 600; font-family: var(--font-mono); }
+
+    /* ✓ / ✗ */
+    .yes { color: var(--accent3); }
+    .no  { color: var(--danger); }
+    .maybe { color: var(--warn); }
+
+    /* Timeline */
+    .timeline { position: relative; padding-left: 32px; margin: 24px 0 40px; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 10px; top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, var(--accent), var(--accent2), var(--accent3));
+      border-radius: 2px;
+    }
+    .tl-item { position: relative; margin-bottom: 32px; }
+    .tl-dot {
+      position: absolute;
+      left: -26px; top: 4px;
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      background: var(--bg);
+    }
+    .tl-dot.violet { border-color: var(--accent2); }
+    .tl-dot.green  { border-color: var(--accent3); }
+    .tl-dot.orange { border-color: var(--accent4); }
+    .tl-item h4 { margin-top: 0; }
+    .tl-phase {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--accent);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .tl-phase.violet { color: var(--accent2); }
+    .tl-phase.green  { color: var(--accent3); }
+
+    /* Code block */
+    .code-block {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--accent3);
+      overflow-x: auto;
+      margin: 16px 0;
+      line-height: 1.6;
+    }
+    .code-block .kw { color: var(--accent2); }
+    .code-block .str { color: var(--accent4); }
+    .code-block .cmt { color: var(--muted); font-style: italic; }
+    .code-block .fn  { color: var(--accent); }
+
+    /* Checklist */
+    .checklist { list-style: none; margin: 12px 0 20px; }
+    .checklist li { padding: 5px 0; color: var(--muted); font-size: 13px; }
+    .checklist li::before { content: '→  '; color: var(--accent); font-family: var(--font-mono); }
+
+    /* Stack cards */
+    .stack-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      margin-bottom: 16px;
+    }
+    .stack-card h4 { color: var(--accent4); margin-bottom: 8px; margin-top: 0; }
+    .stack-layers { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .stack-layer {
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: 6px;
+      padding: 6px 14px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text);
+    }
+
+    /* Progress / Difficulty bar */
+    .diff-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 4px 0;
+    }
+    .diff-bar-track {
+      flex: 1; height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .diff-bar-fill {
+      height: 100%;
+      border-radius: 2px;
+      background: linear-gradient(90deg, var(--accent3), var(--accent));
+    }
+    .diff-label { font-family: var(--font-mono); font-size: 10px; color: var(--muted); width: 70px; }
+
+    /* Roadmap phases */
+    .phase-block {
+      border-left: 3px solid var(--accent);
+      padding: 20px 24px;
+      margin-bottom: 24px;
+      background: rgba(56,189,248,0.04);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    .phase-block.violet { border-left-color: var(--accent2); background: rgba(167,139,250,0.04); }
+    .phase-block.green  { border-left-color: var(--accent3); background: rgba(52,211,153,0.04); }
+    .phase-block.orange { border-left-color: var(--accent4); background: rgba(251,146,60,0.04); }
+    .phase-block.pink   { border-left-color: var(--accent5); background: rgba(244,114,182,0.04); }
+    .phase-num { font-family: var(--font-mono); font-size: 10px; letter-spacing: 2px; color: var(--accent); text-transform: uppercase; margin-bottom: 6px; }
+    .phase-num.violet { color: var(--accent2); }
+    .phase-num.green  { color: var(--accent3); }
+    .phase-num.orange { color: var(--accent4); }
+
+    /* Resource links */
+    .resource-list { list-style: none; margin: 10px 0; }
+    .resource-list li {
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .resource-list li:last-child { border-bottom: none; }
+    .res-name { color: var(--text); font-size: 13px; }
+    .res-type { font-family: var(--font-mono); font-size: 10px; }
+
+    /* Month tracker */
+    .month-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+      margin: 20px 0 32px;
+    }
+    .month-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+    }
+    .month-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--accent);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .month-card ul { list-style: none; }
+    .month-card ul li { font-size: 12px; color: var(--muted); padding: 3px 0; }
+    .month-card ul li::before { content: '· '; color: var(--accent3); }
+
+    /* Warning / Tip boxes */
+    .callout {
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin: 16px 0;
+      font-size: 13px;
+      border-left: 3px solid;
+    }
+    .callout-warn { border-left-color: var(--warn); background: rgba(251,191,36,0.07); color: var(--text); }
+    .callout-tip  { border-left-color: var(--accent3); background: rgba(52,211,153,0.07); color: var(--text); }
+    .callout-info { border-left-color: var(--accent); background: rgba(56,189,248,0.07); color: var(--text); }
+    .callout strong { color: inherit; }
+
+    /* Arch diagram */
+    .arch-diagram {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      margin: 24px 0;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--muted);
+      overflow-x: auto;
+      line-height: 1.8;
+    }
+    .arch-diagram .layer-label { color: var(--accent); font-weight: 700; }
+    .arch-diagram .box {
+      display: inline-block;
+      border: 1px solid var(--border2);
+      border-radius: 4px;
+      padding: 2px 10px;
+      margin: 2px 4px;
+      color: var(--text);
+    }
+    .arch-diagram .box.cyan   { border-color: var(--accent);  color: var(--accent); }
+    .arch-diagram .box.violet { border-color: var(--accent2); color: var(--accent2); }
+    .arch-diagram .box.green  { border-color: var(--accent3); color: var(--accent3); }
+    .arch-diagram .box.orange { border-color: var(--accent4); color: var(--accent4); }
+    .arch-diagram .arrow { color: var(--accent); }
+
+    /* Progress ring in hero */
+    .hero-stats {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-top: 28px;
+    }
+    .stat-pill {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 8px 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .stat-pill .val {
+      font-family: var(--font-head);
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--accent);
+    }
+    .stat-pill .lbl { font-size: 11px; color: var(--muted); }
+
+    /* ---- Career grid ---- */
+    .career-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 14px;
+      margin: 20px 0;
+    }
+    .career-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+    }
+    .career-card h4 { color: var(--text); font-size: 14px; margin-bottom: 8px; margin-top: 0; }
+    .emp-bar { height: 6px; background: var(--border); border-radius: 3px; margin: 8px 0; }
+    .emp-fill { height: 100%; border-radius: 3px; }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 768px) {
+      #sidebar { transform: translateX(-100%); }
+      #sidebar.open { transform: translateX(0); }
+      #main { margin-left: 0; max-width: 100vw; padding: 60px 16px 60px; }
+      #hamburger { display: flex; }
+      .page-hero { padding: 40px 0 28px; }
+      .hero-stats { gap: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Mobile hamburger -->
+<button id="hamburger" onclick="toggleSidebar()" aria-label="Menu">☰</button>
+
+<div class="app">
+
+  <!-- ===== SIDEBAR ===== -->
+  <nav id="sidebar">
+    <div class="sidebar-logo">
+      <h1>Full-Stack<br/>Mastery 2026</h1>
+      <span>Backend · Databases · React</span>
+    </div>
+
+    <div class="nav-section-label">Overview</div>
+    <a class="nav-item active" onclick="show('home')"        ><span class="nav-icon">🏠</span> Home</a>
+    <a class="nav-item" onclick="show('sqlvnosql')"          ><span class="nav-icon">⚖️</span> SQL vs NoSQL</a>
+
+    <div class="nav-section-label">Databases</div>
+    <a class="nav-item" onclick="show('db-compare')"         ><span class="nav-icon">🗄️</span> DB Comparison</a>
+    <a class="nav-item" onclick="show('postgresql')"         ><span class="nav-icon">🐘</span> PostgreSQL</a>
+    <a class="nav-item" onclick="show('mongodb')"            ><span class="nav-icon">🍃</span> MongoDB</a>
+    <a class="nav-item" onclick="show('redis')"              ><span class="nav-icon">⚡</span> Redis</a>
+    <a class="nav-item" onclick="show('supabase')"           ><span class="nav-icon">🚀</span> Supabase / Firebase</a>
+
+    <div class="nav-section-label">Roadmaps</div>
+    <a class="nav-item" onclick="show('roadmap')"            ><span class="nav-icon">🗺️</span> Full Roadmap</a>
+    <a class="nav-item" onclick="show('3month')"             ><span class="nav-icon">📅</span> 3-Month Plan</a>
+    <a class="nav-item" onclick="show('6month')"             ><span class="nav-icon">📆</span> 6-Month Plan</a>
+    <a class="nav-item" onclick="show('1year')"              ><span class="nav-icon">🏆</span> 1-Year Mastery</a>
+
+    <div class="nav-section-label">Deep Dives</div>
+    <a class="nav-item" onclick="show('backend-tech')"       ><span class="nav-icon">⚙️</span> Backend Technologies</a>
+    <a class="nav-item" onclick="show('stacks')"             ><span class="nav-icon">📐</span> Modern Stacks</a>
+    <a class="nav-item" onclick="show('architecture')"       ><span class="nav-icon">🏗️</span> Architecture</a>
+    <a class="nav-item" onclick="show('projects')"           ><span class="nav-icon">🛠️</span> Projects</a>
+
+    <div class="nav-section-label">Career</div>
+    <a class="nav-item" onclick="show('resources')"          ><span class="nav-icon">📚</span> Resources</a>
+    <a class="nav-item" onclick="show('career')"             ><span class="nav-icon">💼</span> Career Advice</a>
+    <a class="nav-item" onclick="show('mistakes')"           ><span class="nav-icon">⚠️</span> Common Mistakes</a>
+
+    <button class="install-btn" id="installBtn" onclick="installPWA()">⬇ Install App</button>
+  </nav>
+
+  <!-- ===== MAIN ===== -->
+  <main id="main">
+
+    <!-- ==================== HOME ==================== -->
+    <section id="sec-home" class="section active">
+      <div class="page-hero">
+        <div class="tag">Full-Stack Mastery · 2026 Edition</div>
+        <h2><span class="gradient-text">Backend + Database</span><br/>Learning Roadmap</h2>
+        <p>A complete, industry-level guide to mastering backend development with React. Built for developers who want to understand systems deeply — not just follow tutorials.</p>
+        <div class="hero-stats">
+          <div class="stat-pill"><span class="val">7</span><span class="lbl">Databases covered</span></div>
+          <div class="stat-pill"><span class="val">12</span><span class="lbl">Month roadmap</span></div>
+          <div class="stat-pill"><span class="val">30+</span><span class="lbl">Practice projects</span></div>
+          <div class="stat-pill"><span class="val">5</span><span class="lbl">Modern stacks</span></div>
+        </div>
+      </div>
+
+      <h3>Why This Roadmap Exists</h3>
+      <p>Most tutorials teach you <em>what</em> to type, not <em>why</em> systems are designed the way they are. This roadmap treats you as an engineer — explaining trade-offs, real-world decisions, and the mental models that senior developers use every day.</p>
+
+      <div class="card-grid">
+        <div class="card">
+          <h4>🎯 Who is this for?</h4>
+          <ul class="checklist">
+            <li>React developers wanting backend depth</li>
+            <li>Bootcamp grads who feel "tutorial dependent"</li>
+            <li>Self-taught devs aiming for production-ready skills</li>
+            <li>Anyone targeting backend/full-stack roles in 2026</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>🏗️ What you'll master</h4>
+          <ul class="checklist">
+            <li>SQL + NoSQL database design</li>
+            <li>REST APIs, GraphQL, real-time systems</li>
+            <li>Auth, caching, indexing, transactions</li>
+            <li>Deployment, Docker, cloud databases</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>🚀 End goal</h4>
+          <ul class="checklist">
+            <li>Build production-grade full-stack apps</li>
+            <li>Discuss architecture decisions confidently</li>
+            <li>Pass technical interviews at top companies</li>
+            <li>Work as a freelancer or join any team</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>Learning Philosophy</h3>
+      <div class="callout callout-tip">
+        <strong>The 70/30 rule:</strong> Spend 70% of your time building real projects and 30% studying concepts. Reading about databases without building with them is almost useless. Every section includes a project to build.
+      </div>
+      <div class="callout callout-info">
+        <strong>Depth over breadth:</strong> Master PostgreSQL deeply before touching 5 databases shallowly. Companies care that you can diagnose a slow query, not that you've "used" 10 different systems.
+      </div>
+
+      <h3>Recommended Learning Order</h3>
+      <div class="phase-block">
+        <div class="phase-num">Phase 1 — Foundation (Weeks 1–6)</div>
+        <h4>SQL fundamentals + PostgreSQL + Node.js + Express</h4>
+        <p>Build the foundation everything else rests on. SQL knowledge transfers to every database.</p>
+      </div>
+      <div class="phase-block violet">
+        <div class="phase-num violet">Phase 2 — Proficiency (Weeks 7–14)</div>
+        <h4>Database design + ORMs (Prisma) + Auth + REST APIs</h4>
+        <p>Go from "making it work" to "making it right." Learn normalization, indexing, transactions.</p>
+      </div>
+      <div class="phase-block green">
+        <div class="phase-num green">Phase 3 — Intermediate (Weeks 15–24)</div>
+        <h4>MongoDB + Redis + GraphQL + Next.js backend + Docker</h4>
+        <p>Add NoSQL, caching, and modern patterns. Start containerizing everything.</p>
+      </div>
+      <div class="phase-block orange">
+        <div class="phase-num orange">Phase 4 — Advanced (Weeks 25–52)</div>
+        <h4>Scaling + Security + Cloud + Real-time + Architecture</h4>
+        <p>Production engineering: query optimization, load balancing, WebSockets, cloud deployment.</p>
+      </div>
+    </section>
+
+    <!-- ==================== SQL VS NOSQL ==================== -->
+    <section id="sec-sqlvnosql" class="section">
+      <div class="page-hero">
+        <div class="tag">Core Concept</div>
+        <h2>SQL vs <span class="gradient-text">NoSQL</span></h2>
+        <p>The most important architectural decision in backend development. Understanding this deeply separates junior from senior engineers.</p>
+      </div>
+
+      <h3>The Simple Mental Model</h3>
+      <div class="card">
+        <p><strong style="color:var(--accent)">SQL (Relational)</strong> — Think of a perfectly organized Excel spreadsheet. Data lives in tables with rows and columns. Relationships between tables are defined upfront. Great when your data has a clear, consistent shape.</p>
+        <p><strong style="color:var(--accent2)">NoSQL (Non-Relational)</strong> — Think of a flexible filing cabinet. Each "document" can have a different structure. Great when data shape varies wildly or you need to scale horizontally to millions of users.</p>
+      </div>
+
+      <h3>Deep Comparison</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Dimension</th>
+              <th>SQL (PostgreSQL, MySQL)</th>
+              <th>NoSQL (MongoDB, Redis)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="col-name">Data structure</td><td>Tables, rows, columns (fixed schema)</td><td>Documents, key-value, graphs (flexible)</td></tr>
+            <tr><td class="col-name">Schema</td><td>Defined upfront, strict</td><td>Flexible, can evolve per document</td></tr>
+            <tr><td class="col-name">Relationships</td><td>JOINs, foreign keys, enforced by DB</td><td>Embedding or manual references in app code</td></tr>
+            <tr><td class="col-name">ACID compliance</td><td><span class="yes">✓ Full</span> — transactions guaranteed</td><td><span class="maybe">⚠ Varies</span> — MongoDB has it, Redis does not</td></tr>
+            <tr><td class="col-name">Scaling</td><td>Vertical scaling (bigger server) primarily</td><td>Horizontal scaling (more servers) naturally</td></tr>
+            <tr><td class="col-name">Query language</td><td>SQL — universal, powerful, transferable</td><td>DB-specific APIs (less transferable)</td></tr>
+            <tr><td class="col-name">Schema changes</td><td>Painful (migrations required)</td><td>Easy (just add new fields)</td></tr>
+            <tr><td class="col-name">Best for</td><td>Banking, ERP, EHR, e-commerce orders</td><td>Social feeds, catalogs, session data, IoT</td></tr>
+            <tr><td class="col-name">Learning value</td><td>⭐⭐⭐⭐⭐ Extremely transferable</td><td>⭐⭐⭐ Good but DB-specific</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>When To Choose SQL</h3>
+      <ul class="checklist">
+        <li>Financial transactions (money must not be lost or duplicated)</li>
+        <li>Complex relationships between entities (users, orders, products, payments)</li>
+        <li>Compliance-heavy industries (healthcare, banking, legal)</li>
+        <li>You need complex queries across multiple tables</li>
+        <li>Your data shape is well-understood upfront</li>
+        <li>Team is comfortable with SQL (don't switch just to switch)</li>
+      </ul>
+
+      <h3>When To Choose NoSQL</h3>
+      <ul class="checklist">
+        <li>Truly variable document structure (product catalog with different attributes per category)</li>
+        <li>Massive write throughput (millions of events per second)</li>
+        <li>Horizontal scaling is a non-negotiable requirement</li>
+        <li>Caching, sessions, leaderboards (Redis)</li>
+        <li>Real-time collaborative features</li>
+        <li>Rapid prototyping where schema is unknown</li>
+      </ul>
+
+      <h3>The Real-World Answer (2026)</h3>
+      <div class="callout callout-warn">
+        <strong>Most startups and mid-size companies use PostgreSQL for 80%+ of their data</strong> — even "big tech" companies. MongoDB peaked in hype around 2015–2018. PostgreSQL's JSONB column means you get relational AND flexible schema in one database. The industry has largely converged on: PostgreSQL as primary, Redis for caching/queues, and occasionally MongoDB for specific document use cases.
+      </div>
+
+      <h3>What Large Companies Actually Use</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Company</th><th>Primary DB</th><th>Cache</th><th>Search</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td class="col-name">Airbnb</td><td>MySQL → migrating to Vitess</td><td>Redis</td><td>Elasticsearch</td><td>Horizontal MySQL sharding</td></tr>
+            <tr><td class="col-name">GitHub</td><td>MySQL</td><td>Redis, Memcached</td><td>Elasticsearch</td><td>Heavy caching layer</td></tr>
+            <tr><td class="col-name">Instagram</td><td>PostgreSQL</td><td>Redis</td><td>—</td><td>Billions of rows, pg partitioning</td></tr>
+            <tr><td class="col-name">Shopify</td><td>MySQL (sharded)</td><td>Redis</td><td>Elasticsearch</td><td>Per-shop sharding strategy</td></tr>
+            <tr><td class="col-name">LinkedIn</td><td>Espresso (custom)</td><td>Couchbase</td><td>Galene</td><td>Custom at massive scale</td></tr>
+            <tr><td class="col-name">Discord</td><td>Cassandra + ScyllaDB</td><td>Redis</td><td>Elasticsearch</td><td>Billions of messages, time-series</td></tr>
+            <tr><td class="col-name">Notion</td><td>PostgreSQL</td><td>Redis</td><td>—</td><td>JSONB heavily used</td></tr>
+            <tr><td class="col-name">Supabase</td><td>PostgreSQL</td><td>Redis</td><td>pg_vector</td><td>Built entirely on Postgres</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ==================== DB COMPARE ==================== -->
+    <section id="sec-db-compare" class="section">
+      <div class="page-hero">
+        <div class="tag">Database Guide</div>
+        <h2>All 7 Databases <span class="gradient-text">Compared</span></h2>
+        <p>Honest, practical analysis of every major database you'll encounter as a full-stack developer in 2026.</p>
+      </div>
+
+      <h3>Quick Reference Matrix</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Database</th><th>Type</th><th>Difficulty</th><th>Beginner</th><th>Production</th><th>Startup</th><th>React/Node</th><th>Free</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-name">🐘 PostgreSQL</td>
+              <td>Relational SQL</td>
+              <td><span class="badge badge-orange">Medium</span></td>
+              <td><span class="maybe">⚠ Learning curve</span></td>
+              <td><span class="yes">✓ Best choice</span></td>
+              <td><span class="yes">✓ Excellent</span></td>
+              <td><span class="yes">✓✓ Perfect</span></td>
+              <td><span class="yes">✓ OSS</span></td>
+            </tr>
+            <tr>
+              <td class="col-name">🐬 MySQL</td>
+              <td>Relational SQL</td>
+              <td><span class="badge badge-green">Easy-Med</span></td>
+              <td><span class="yes">✓ Very friendly</span></td>
+              <td><span class="yes">✓ Great</span></td>
+              <td><span class="yes">✓ Good</span></td>
+              <td><span class="yes">✓ Great</span></td>
+              <td><span class="yes">✓ OSS</span></td>
+            </tr>
+            <tr>
+              <td class="col-name">🍃 MongoDB</td>
+              <td>Document NoSQL</td>
+              <td><span class="badge badge-green">Easy</span></td>
+              <td><span class="yes">✓ Very friendly</span></td>
+              <td><span class="yes">✓ Good</span></td>
+              <td><span class="yes">✓ Good</span></td>
+              <td><span class="yes">✓ Excellent</span></td>
+              <td><span class="yes">✓ Community</span></td>
+            </tr>
+            <tr>
+              <td class="col-name">🪶 SQLite</td>
+              <td>Embedded SQL</td>
+              <td><span class="badge badge-green">Easy</span></td>
+              <td><span class="yes">✓ Great for learning</span></td>
+              <td><span class="no">✗ Limited</span></td>
+              <td><span class="maybe">⚠ Prototyping</span></td>
+              <td><span class="yes">✓ Dev only</span></td>
+              <td><span class="yes">✓ Free</span></td>
+            </tr>
+            <tr>
+              <td class="col-name">⚡ Redis</td>
+              <td>In-Memory K/V</td>
+              <td><span class="badge badge-orange">Medium</span></td>
+              <td><span class="maybe">⚠ Conceptually odd</span></td>
+              <td><span class="yes">✓ Essential</span></td>
+              <td><span class="yes">✓ Must have</span></td>
+              <td><span class="yes">✓✓ Perfect</span></td>
+              <td><span class="yes">✓ OSS</span></td>
+            </tr>
+            <tr>
+              <td class="col-name">🔥 Firebase</td>
+              <td>BaaS / NoSQL</td>
+              <td><span class="badge badge-green">Easy</span></td>
+              <td><span class="yes">✓ Excellent</span></td>
+              <td><span class="maybe">⚠ Vendor lock-in</span></td>
+              <td><span class="maybe">⚠ Gets expensive</span></td>
+              <td><span class="yes">✓✓ Built for React</span></td>
+              <td><span class="maybe">⚠ Free tier only</span></td>
+            </tr>
+            <tr>
+              <td class="col-name">🚀 Supabase</td>
+              <td>BaaS on Postgres</td>
+              <td><span class="badge badge-green">Easy-Med</span></td>
+              <td><span class="yes">✓ Excellent</span></td>
+              <td><span class="yes">✓ Production ready</span></td>
+              <td><span class="yes">✓✓ Best startup DB</span></td>
+              <td><span class="yes">✓✓ Best React DX</span></td>
+              <td><span class="yes">✓ Generous free</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>🐘 PostgreSQL — The Professional's Choice</h3>
+      <div class="card">
+        <div class="rating-row">
+          <span class="badge badge-cyan">Relational</span>
+          <span class="badge badge-green">Production ✓✓</span>
+          <span class="badge badge-orange">Medium Difficulty</span>
+          <span class="badge badge-violet">Scalable</span>
+        </div>
+        <p><strong style="color:var(--text)">What it is:</strong> The world's most advanced open-source relational database. Built for reliability, correctness, and features. Handles JSON natively (JSONB), full-text search, geospatial queries, and more.</p>
+        <p><strong style="color:var(--text)">Real-world uses:</strong> Instagram (billions of rows), GitHub, Notion, Supabase, Vercel's database, nearly every serious SaaS product.</p>
+        <div class="diff-bar"><span class="diff-label">Beginner</span><div class="diff-bar-track"><div class="diff-bar-fill" style="width:50%"></div></div></div>
+        <div class="diff-bar"><span class="diff-label">Production</span><div class="diff-bar-track"><div class="diff-bar-fill" style="width:98%"></div></div></div>
+        <div class="diff-bar"><span class="diff-label">Scalability</span><div class="diff-bar-track"><div class="diff-bar-fill" style="width:90%"></div></div></div>
+        <h4>✓ Advantages</h4>
+        <ul class="checklist">
+          <li>Full ACID compliance — your data is safe</li>
+          <li>JSONB column — relational + document in one DB</li>
+          <li>Incredible extension ecosystem (PostGIS, pgvector, TimescaleDB)</li>
+          <li>Row-level security — build auth directly in the DB</li>
+          <li>SQL knowledge transfers to MySQL, SQLite, cloud databases</li>
+          <li>Supabase, Neon, Railway, Render all offer free Postgres hosting</li>
+        </ul>
+        <h4>✗ Disadvantages</h4>
+        <ul class="checklist">
+          <li>Steeper learning curve than Firebase or MongoDB</li>
+          <li>Schema migrations require planning</li>
+          <li>Horizontal sharding is complex (but rarely needed before 10M+ rows)</li>
+        </ul>
+        <div class="callout callout-tip"><strong>Verdict:</strong> Learn this first. It will serve you for your entire career. Every skill transfers.</div>
+      </div>
+
+      <h3>🐬 MySQL — The Battle-Tested Veteran</h3>
+      <div class="card">
+        <div class="rating-row">
+          <span class="badge badge-cyan">Relational</span>
+          <span class="badge badge-green">Very Beginner Friendly</span>
+          <span class="badge badge-green">Production ✓</span>
+        </div>
+        <p>MySQL is the world's most deployed relational database. PHP/WordPress ecosystem built on it. Airbnb, Shopify, YouTube all run on MySQL. It's slightly less feature-rich than PostgreSQL but has a massive community and tooling ecosystem.</p>
+        <div class="diff-bar"><span class="diff-label">Beginner</span><div class="diff-bar-track"><div class="diff-bar-fill" style="width:75%"></div></div></div>
+        <div class="diff-bar"><span class="diff-label">Production</span><div class="diff-bar-track"><div class="diff-bar-fill" style="width:85%"></div></div></div>
+        <h4>Key Insight</h4>
+        <p>SQL knowledge learned on PostgreSQL transfers 95% to MySQL. The differences are syntax details. Learn Postgres, and you understand MySQL too. In 2026, PostgreSQL has surpassed MySQL in feature richness and community momentum — but MySQL is still widely used and knowing it is a hiring advantage.</p>
+      </div>
+
+      <h3>🍃 MongoDB — The Flexible Document Store</h3>
+      <div class="card">
+        <div class="rating-row">
+          <span class="badge badge-violet">Document NoSQL</span>
+          <span class="badge badge-green">Beginner Friendly</span>
+          <span class="badge badge-green">Production ✓</span>
+          <span class="badge badge-orange">Hype peaked</span>
+        </div>
+        <p>MongoDB stores data as JSON-like documents. No rigid schema — great for flexibility. The entire MERN stack (MongoDB, Express, React, Node.js) popularized it. MongoDB Atlas provides a generous free cloud tier.</p>
+        <div class="diff-bar"><span class="diff-label">Beginner</span><div class="diff-bar-track"><div class="diff-bar-fill" style="width:80%"></div></div></div>
+        <div class="diff-bar"><span class="diff-label">Production</span><div class="diff-bar-track"><div class="diff-bar-fill" style="width:75%"></div></div></div>
+        <h4>✓ When to use MongoDB</h4>
+        <ul class="checklist">
+          <li>Product catalog with highly variable attributes per product</li>
+          <li>Content management systems with varied content types</li>
+          <li>Real-time analytics with high write throughput</li>
+          <li>When you're learning and want fast iteration</li>
+        </ul>
+        <div class="callout callout-warn"><strong>2026 Reality Check:</strong> PostgreSQL's JSONB column does most of what MongoDB does, with the added benefits of SQL, transactions, and better tooling. Many teams that "grew up on MongoDB" are migrating back to Postgres. Learn MongoDB — it's on many job listings — but don't make it your first database.</div>
+      </div>
+
+      <h3>🪶 SQLite — The Humble Giant</h3>
+      <div class="card">
+        <div class="rating-row">
+          <span class="badge badge-cyan">Embedded SQL</span>
+          <span class="badge badge-green">Easiest</span>
+          <span class="badge badge-red">Not for Web Production</span>
+        </div>
+        <p>SQLite is a file-based database with zero server setup. It powers billions of apps — every iPhone, Android device, and browser has SQLite built in. Used by Notion (desktop app), Obsidian, and many Electron apps.</p>
+        <h4>Best uses</h4>
+        <ul class="checklist">
+          <li>Learning SQL fundamentals (perfect sandbox)</li>
+          <li>Desktop applications, mobile apps</li>
+          <li>Testing and local development</li>
+          <li>Edge computing (Cloudflare D1 uses SQLite)</li>
+        </ul>
+        <div class="callout callout-info"><strong>Note:</strong> SQLite is NOT for concurrent web applications — it doesn't handle multiple simultaneous writers well. But it's perfect for learning SQL before you move to PostgreSQL.</div>
+      </div>
+
+      <h3>⚡ Redis — The Speed Layer</h3>
+      <div class="card">
+        <div class="rating-row">
+          <span class="badge badge-cyan">In-Memory K/V</span>
+          <span class="badge badge-orange">Medium Difficulty</span>
+          <span class="badge badge-green">Production Essential</span>
+        </div>
+        <p>Redis is a data structure server that runs entirely in memory. It's absurdly fast — millions of operations per second. Almost every production application uses Redis for something. It's not a primary database — it's a complement to your main database.</p>
+        <div class="diff-bar"><span class="diff-label">Speed</span><div class="diff-bar-track"><div class="diff-bar-fill" style="width:100%"></div></div></div>
+        <div class="diff-bar"><span class="diff-label">Production</span><div class="diff-bar-track"><div class="diff-bar-fill" style="width:95%"></div></div></div>
+        <h4>Real-world uses</h4>
+        <ul class="checklist">
+          <li><strong>Caching:</strong> Store expensive DB query results (avoids repeated SELECT *)</li>
+          <li><strong>Sessions:</strong> Store user session data (faster than DB lookups)</li>
+          <li><strong>Rate limiting:</strong> Track API request counts per user</li>
+          <li><strong>Queues:</strong> Background job queues (with BullMQ library)</li>
+          <li><strong>Pub/Sub:</strong> Real-time notifications between microservices</li>
+          <li><strong>Leaderboards:</strong> Sorted sets for gaming/ranking features</li>
+        </ul>
+      </div>
+
+      <h3>🔥 Firebase vs 🚀 Supabase</h3>
+      <div class="card">
+        <div class="rating-row">
+          <span class="badge badge-pink">BaaS Comparison</span>
+        </div>
+        <div class="table-wrap" style="margin-top:16px">
+          <table>
+            <thead><tr><th>Feature</th><th>🔥 Firebase</th><th>🚀 Supabase</th></tr></thead>
+            <tbody>
+              <tr><td class="col-name">Database</td><td>Firestore (NoSQL)</td><td>PostgreSQL (SQL)</td></tr>
+              <tr><td class="col-name">Auth</td><td><span class="yes">✓ Excellent</span></td><td><span class="yes">✓ Excellent</span></td></tr>
+              <tr><td class="col-name">Real-time</td><td><span class="yes">✓ First-class</span></td><td><span class="yes">✓ WebSockets</span></td></tr>
+              <tr><td class="col-name">Storage</td><td><span class="yes">✓ Firebase Storage</span></td><td><span class="yes">✓ S3-compatible</span></td></tr>
+              <tr><td class="col-name">Vendor lock-in</td><td><span class="no">✗ High (Google)</span></td><td><span class="yes">✓ Low (open-source)</span></td></tr>
+              <tr><td class="col-name">SQL knowledge</td><td><span class="no">✗ Not applicable</span></td><td><span class="yes">✓ Full SQL</span></td></tr>
+              <tr><td class="col-name">Self-hostable</td><td><span class="no">✗ No</span></td><td><span class="yes">✓ Yes (Docker)</span></td></tr>
+              <tr><td class="col-name">Pricing at scale</td><td><span class="no">✗ Expensive</span></td><td><span class="yes">✓ Reasonable</span></td></tr>
+              <tr><td class="col-name">Learning value</td><td><span class="maybe">⚠ Firebase-only</span></td><td><span class="yes">✓ SQL = transferable</span></td></tr>
+              <tr><td class="col-name">Best for</td><td>Rapid prototyping, MVPs</td><td>Startups, production apps</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout callout-tip"><strong>2026 Recommendation:</strong> Supabase wins for learning value. You get Firebase-like developer experience but learn PostgreSQL underneath. The SQL skills you build transfer everywhere. Firebase is great for quick MVPs but you learn nothing transferable about databases.</div>
+      </div>
+    </section>
+
+    <!-- ==================== POSTGRESQL ==================== -->
+    <section id="sec-postgresql" class="section">
+      <div class="page-hero">
+        <div class="tag">Deep Dive</div>
+        <h2>🐘 <span class="gradient-text">PostgreSQL</span> Mastery</h2>
+        <p>The complete guide to learning and mastering PostgreSQL — from first SELECT to production optimization.</p>
+      </div>
+
+      <h3>Core Concepts to Master</h3>
+      <div class="card-grid">
+        <div class="card"><h4>1. SQL Fundamentals</h4>
+          <ul class="checklist">
+            <li>SELECT, INSERT, UPDATE, DELETE</li>
+            <li>WHERE, ORDER BY, GROUP BY, HAVING</li>
+            <li>Aggregate functions (COUNT, SUM, AVG)</li>
+            <li>JOINS (INNER, LEFT, RIGHT, FULL)</li>
+            <li>Subqueries and CTEs (WITH clauses)</li>
+          </ul>
+        </div>
+        <div class="card"><h4>2. Schema Design</h4>
+          <ul class="checklist">
+            <li>Tables, columns, data types</li>
+            <li>Primary keys and foreign keys</li>
+            <li>Normalization (1NF, 2NF, 3NF)</li>
+            <li>One-to-many, many-to-many</li>
+            <li>Junction tables</li>
+          </ul>
+        </div>
+        <div class="card"><h4>3. Advanced Features</h4>
+          <ul class="checklist">
+            <li>Indexes (B-tree, Hash, GIN, GiST)</li>
+            <li>Transactions (BEGIN, COMMIT, ROLLBACK)</li>
+            <li>Window functions</li>
+            <li>JSONB columns</li>
+            <li>Row-level security (RLS)</li>
+          </ul>
+        </div>
+        <div class="card"><h4>4. Performance</h4>
+          <ul class="checklist">
+            <li>EXPLAIN ANALYZE</li>
+            <li>Query planning and optimization</li>
+            <li>Connection pooling (PgBouncer)</li>
+            <li>Partitioning large tables</li>
+            <li>Vacuum and autovacuum</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>SQL Fundamentals — Learn This Order</h3>
+      <div class="phase-block">
+        <div class="phase-num">Week 1–2</div>
+        <h4>Basic Queries</h4>
+        <div class="code-block">
+<span class="cmt">-- SELECT basics</span>
+<span class="kw">SELECT</span> id, name, email <span class="kw">FROM</span> users <span class="kw">WHERE</span> active = <span class="kw">true</span>;
+
+<span class="cmt">-- Aggregations</span>
+<span class="kw">SELECT</span> department, <span class="fn">COUNT</span>(*) <span class="kw">AS</span> employee_count,
+       <span class="fn">AVG</span>(salary) <span class="kw">AS</span> avg_salary
+<span class="kw">FROM</span> employees
+<span class="kw">GROUP BY</span> department
+<span class="kw">HAVING COUNT</span>(*) > 5
+<span class="kw">ORDER BY</span> avg_salary <span class="kw">DESC</span>;
+
+<span class="cmt">-- JOINs</span>
+<span class="kw">SELECT</span> u.name, o.total, o.created_at
+<span class="kw">FROM</span> users u
+<span class="kw">INNER JOIN</span> orders o <span class="kw">ON</span> u.id = o.user_id
+<span class="kw">WHERE</span> o.status = <span class="str">'completed'</span>
+<span class="kw">ORDER BY</span> o.created_at <span class="kw">DESC</span>;
+        </div>
+      </div>
+      <div class="phase-block violet">
+        <div class="phase-num violet">Week 3–4</div>
+        <h4>CTEs and Window Functions</h4>
+        <div class="code-block">
+<span class="cmt">-- CTE (Common Table Expression)</span>
+<span class="kw">WITH</span> recent_orders <span class="kw">AS</span> (
+  <span class="kw">SELECT</span> user_id, <span class="fn">SUM</span>(total) <span class="kw">AS</span> total_spent
+  <span class="kw">FROM</span> orders
+  <span class="kw">WHERE</span> created_at > <span class="fn">NOW</span>() - <span class="kw">INTERVAL</span> <span class="str">'30 days'</span>
+  <span class="kw">GROUP BY</span> user_id
+)
+<span class="kw">SELECT</span> u.name, ro.total_spent
+<span class="kw">FROM</span> users u
+<span class="kw">JOIN</span> recent_orders ro <span class="kw">ON</span> u.id = ro.user_id
+<span class="kw">ORDER BY</span> ro.total_spent <span class="kw">DESC LIMIT</span> 10;
+
+<span class="cmt">-- Window function — running total</span>
+<span class="kw">SELECT</span> date, revenue,
+  <span class="fn">SUM</span>(revenue) <span class="kw">OVER</span> (<span class="kw">ORDER BY</span> date) <span class="kw">AS</span> running_total
+<span class="kw">FROM</span> daily_sales;
+        </div>
+      </div>
+
+      <h3>Database Design — Normalization</h3>
+      <div class="card">
+        <p><strong style="color:var(--text)">Normalization</strong> is the process of organizing your database to reduce redundancy and improve data integrity. Think of it as keeping data in exactly one place.</p>
+        <h4>1NF — First Normal Form</h4>
+        <p>Each column holds atomic (single) values. No arrays in columns. Every row is unique.</p>
+        <h4>2NF — Second Normal Form</h4>
+        <p>Must be 1NF. Every non-key column depends on the WHOLE primary key (eliminates partial dependencies).</p>
+        <h4>3NF — Third Normal Form</h4>
+        <p>Must be 2NF. Non-key columns must NOT depend on other non-key columns (eliminates transitive dependencies).</p>
+        <div class="callout callout-tip"><strong>Rule of thumb:</strong> Normalize to 3NF, then selectively denormalize for performance. Premature denormalization is one of the most common junior mistakes.</div>
+      </div>
+
+      <h3>Indexing — The Most Impactful Skill</h3>
+      <div class="card">
+        <p>An index is a separate data structure that makes lookups fast — like a book's index vs reading every page. Without indexes, every query scans the entire table.</p>
+        <div class="code-block">
+<span class="cmt">-- Create index on frequently queried column</span>
+<span class="kw">CREATE INDEX</span> idx_users_email <span class="kw">ON</span> users(email);
+
+<span class="cmt">-- Composite index for multi-column queries</span>
+<span class="kw">CREATE INDEX</span> idx_orders_user_status <span class="kw">ON</span> orders(user_id, status);
+
+<span class="cmt">-- Partial index (only index subset of rows)</span>
+<span class="kw">CREATE INDEX</span> idx_active_users <span class="kw">ON</span> users(last_login)
+<span class="kw">WHERE</span> active = <span class="kw">true</span>;
+
+<span class="cmt">-- Analyze a slow query</span>
+<span class="kw">EXPLAIN ANALYZE SELECT</span> * <span class="kw">FROM</span> orders
+<span class="kw">WHERE</span> user_id = 42 <span class="kw">AND</span> status = <span class="str">'pending'</span>;
+        </div>
+        <div class="callout callout-warn"><strong>Don't over-index!</strong> Every index slows down INSERT/UPDATE/DELETE. Index columns that appear in WHERE clauses and JOIN conditions of frequently run queries.</div>
+      </div>
+
+      <h3>Transactions — Keeping Data Consistent</h3>
+      <div class="card">
+        <p>A transaction groups multiple operations so they either ALL succeed or ALL fail. Critical for financial operations, inventory management, anything involving money or sensitive data.</p>
+        <div class="code-block">
+<span class="cmt">-- Transfer money between accounts (ACID example)</span>
+<span class="kw">BEGIN</span>;
+
+<span class="kw">UPDATE</span> accounts <span class="kw">SET</span> balance = balance - 500
+<span class="kw">WHERE</span> id = 1;  <span class="cmt">-- debit sender</span>
+
+<span class="kw">UPDATE</span> accounts <span class="kw">SET</span> balance = balance + 500
+<span class="kw">WHERE</span> id = 2;  <span class="cmt">-- credit receiver</span>
+
+<span class="cmt">-- Both succeed → COMMIT, or both fail → ROLLBACK</span>
+<span class="kw">COMMIT</span>;
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== MONGODB ==================== -->
+    <section id="sec-mongodb" class="section">
+      <div class="page-hero">
+        <div class="tag">Deep Dive</div>
+        <h2>🍃 <span class="gradient-text">MongoDB</span> Deep Dive</h2>
+        <p>Document databases, when to use them, and how to work with them effectively.</p>
+      </div>
+      <h3>Core MongoDB Concepts</h3>
+      <div class="card-grid">
+        <div class="card"><h4>Document Model</h4><p>Data stored as BSON (Binary JSON). Each document can have different fields — no schema enforced at DB level (though you should enforce it in code).</p></div>
+        <div class="card"><h4>Collections</h4><p>Groups of documents — equivalent to tables in SQL. A "users" collection holds all user documents.</p></div>
+        <div class="card"><h4>Aggregation Pipeline</h4><p>MongoDB's version of complex SQL queries. Chain stages: $match → $group → $sort → $project. Powerful but different from SQL.</p></div>
+        <div class="card"><h4>Mongoose ODM</h4><p>The standard Node.js library for MongoDB. Adds schema validation, middleware hooks, and a cleaner API. Always use Mongoose in Node.js projects.</p></div>
+      </div>
+
+      <h3>MongoDB with Node.js — Code Pattern</h3>
+      <div class="code-block">
+<span class="cmt">// Mongoose Schema — always define a schema even in NoSQL</span>
+<span class="kw">const</span> userSchema = <span class="kw">new</span> <span class="fn">Schema</span>({
+  name:    { type: String, required: <span class="kw">true</span> },
+  email:   { type: String, required: <span class="kw">true</span>, unique: <span class="kw">true</span> },
+  role:    { type: String, enum: [<span class="str">'user'</span>, <span class="str">'admin'</span>], default: <span class="str">'user'</span> },
+  profile: {   <span class="cmt">// Embedded document</span>
+    bio:    String,
+    avatar: String,
+  },
+  createdAt: { type: Date, default: Date.now }
+});
+
+<span class="cmt">// Query with aggregation pipeline</span>
+<span class="kw">const</span> result = <span class="kw">await</span> Order.<span class="fn">aggregate</span>([
+  { $match: { status: <span class="str">'completed'</span> } },
+  { $group: { _id: <span class="str">'$userId'</span>, total: { $sum: <span class="str">'$amount'</span> } } },
+  { $sort: { total: -1 } },
+  { $limit: 10 }
+]);
+      </div>
+
+      <h3>Embedding vs Referencing</h3>
+      <div class="card">
+        <p>This is the most important design decision in MongoDB.</p>
+        <div class="table-wrap" style="margin-top:12px">
+          <table>
+            <thead><tr><th>Strategy</th><th>When to Use</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td class="col-name">Embed</td><td>Data always accessed together, child data is small</td><td>User → address, Profile → social links</td></tr>
+              <tr><td class="col-name">Reference</td><td>Data accessed independently, data is large or shared</td><td>Post → Author (User), Order → Products</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== REDIS ==================== -->
+    <section id="sec-redis" class="section">
+      <div class="page-hero">
+        <div class="tag">Deep Dive</div>
+        <h2>⚡ <span class="gradient-text">Redis</span> — The Speed Layer</h2>
+        <p>Why every production app needs Redis and how to use it effectively.</p>
+      </div>
+      <h3>Redis Data Structures</h3>
+      <div class="card-grid">
+        <div class="card"><h4>Strings</h4><p>Simple key-value. Most common use: caching API responses, storing session tokens.</p></div>
+        <div class="card"><h4>Hashes</h4><p>Like a mini object/record. Use for storing user session data with multiple fields.</p></div>
+        <div class="card"><h4>Lists</h4><p>Ordered lists. Use for activity feeds, queues (push/pop from either end).</p></div>
+        <div class="card"><h4>Sets</h4><p>Unique values. Use for tracking unique visitors, tags, permissions.</p></div>
+        <div class="card"><h4>Sorted Sets</h4><p>Values with scores. Perfect for leaderboards, rate limiting, priority queues.</p></div>
+        <div class="card"><h4>Pub/Sub</h4><p>Message broadcasting. Use for real-time notifications between services.</p></div>
+      </div>
+
+      <h3>Caching Pattern with Node.js</h3>
+      <div class="code-block">
+<span class="kw">import</span> { createClient } <span class="kw">from</span> <span class="str">'redis'</span>;
+<span class="kw">const</span> redis = <span class="fn">createClient</span>();
+
+<span class="kw">async function</span> <span class="fn">getUserWithCache</span>(userId) {
+  <span class="kw">const</span> cacheKey = <span class="str">`user:${userId}`</span>;
+
+  <span class="cmt">// 1. Check cache first (fast — in memory)</span>
+  <span class="kw">const</span> cached = <span class="kw">await</span> redis.<span class="fn">get</span>(cacheKey);
+  <span class="kw">if</span> (cached) <span class="kw">return</span> JSON.<span class="fn">parse</span>(cached);
+
+  <span class="cmt">// 2. Cache miss — query database (slow)</span>
+  <span class="kw">const</span> user = <span class="kw">await</span> db.<span class="fn">query</span>(<span class="str">'SELECT * FROM users WHERE id=$1'</span>, [userId]);
+
+  <span class="cmt">// 3. Store in cache for next time (TTL = 1 hour)</span>
+  <span class="kw">await</span> redis.<span class="fn">setEx</span>(cacheKey, 3600, JSON.<span class="fn">stringify</span>(user));
+
+  <span class="kw">return</span> user;
+}
+      </div>
+
+      <h3>Rate Limiting with Redis</h3>
+      <div class="code-block">
+<span class="kw">async function</span> <span class="fn">rateLimiter</span>(req, res, next) {
+  <span class="kw">const</span> key = <span class="str">`rate:${req.ip}`</span>;
+  <span class="kw">const</span> requests = <span class="kw">await</span> redis.<span class="fn">incr</span>(key);
+
+  <span class="kw">if</span> (requests === 1) {
+    <span class="kw">await</span> redis.<span class="fn">expire</span>(key, 60); <span class="cmt">// 60 second window</span>
+  }
+
+  <span class="kw">if</span> (requests > 100) {
+    <span class="kw">return</span> res.<span class="fn">status</span>(429).<span class="fn">json</span>({ error: <span class="str">'Too many requests'</span> });
+  }
+  <span class="fn">next</span>();
+}
+      </div>
+    </section>
+
+    <!-- ==================== SUPABASE ==================== -->
+    <section id="sec-supabase" class="section">
+      <div class="page-hero">
+        <div class="tag">Modern BaaS</div>
+        <h2>🚀 Supabase & <span class="gradient-text">Firebase</span></h2>
+        <p>Backend-as-a-Service solutions — when to use them, when to avoid them.</p>
+      </div>
+      <h3>Supabase Architecture</h3>
+      <div class="arch-diagram">
+        <div><span class="layer-label">React App</span></div>
+        <div style="text-align:center;padding:8px 0"><span class="arrow">↓ supabase-js SDK ↓</span></div>
+        <div>
+          <span class="box cyan">PostgREST (auto REST API)</span>
+          <span class="box violet">Realtime (WebSockets)</span>
+          <span class="box green">Auth (JWT)</span>
+          <span class="box orange">Storage (S3)</span>
+        </div>
+        <div style="text-align:center;padding:8px 0"><span class="arrow">↓ all powered by ↓</span></div>
+        <div><span class="box cyan">PostgreSQL</span></div>
+      </div>
+      <h3>Why Supabase Wins for Learning</h3>
+      <ul class="checklist">
+        <li>You write real PostgreSQL — skills transfer everywhere</li>
+        <li>Row-level security teaches you to think about auth at DB level</li>
+        <li>Real-time subscriptions built in — no extra infrastructure</li>
+        <li>Self-hostable if vendor lock-in concerns you</li>
+        <li>Free tier is extremely generous for learning and MVPs</li>
+        <li>Excellent TypeScript types generated from your schema</li>
+      </ul>
+      <div class="code-block">
+<span class="cmt">// Supabase with React — incredibly clean API</span>
+<span class="kw">import</span> { createClient } <span class="kw">from</span> <span class="str">'@supabase/supabase-js'</span>;
+<span class="kw">const</span> supabase = <span class="fn">createClient</span>(url, anonKey);
+
+<span class="cmt">// Query data</span>
+<span class="kw">const</span> { data, error } = <span class="kw">await</span> supabase
+  .<span class="fn">from</span>(<span class="str">'posts'</span>)
+  .<span class="fn">select</span>(<span class="str">'*, author:users(name, avatar)'</span>)
+  .<span class="fn">eq</span>(<span class="str">'published'</span>, <span class="kw">true</span>)
+  .<span class="fn">order</span>(<span class="str">'created_at'</span>, { ascending: <span class="kw">false</span> });
+
+<span class="cmt">// Real-time subscription</span>
+supabase
+  .<span class="fn">channel</span>(<span class="str">'posts'</span>)
+  .<span class="fn">on</span>(<span class="str">'postgres_changes'</span>, { event: <span class="str">'INSERT'</span>, schema: <span class="str">'public'</span>, table: <span class="str">'posts'</span> },
+    (payload) => <span class="fn">addPost</span>(payload.new))
+  .<span class="fn">subscribe</span>();
+      </div>
+    </section>
+
+    <!-- ==================== FULL ROADMAP ==================== -->
+    <section id="sec-roadmap" class="section">
+      <div class="page-hero">
+        <div class="tag">Complete Path</div>
+        <h2>Step-by-Step <span class="gradient-text">Roadmap</span></h2>
+        <p>From SQL fundamentals to production-grade architecture — every topic in the right order.</p>
+      </div>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-phase">Foundation — Weeks 1–3</div>
+          <h4>SQL Fundamentals</h4>
+          <ul class="checklist">
+            <li>Install PostgreSQL locally + pgAdmin or TablePlus</li>
+            <li>CREATE TABLE, data types (VARCHAR, INTEGER, BOOLEAN, TIMESTAMPTZ)</li>
+            <li>INSERT, SELECT, UPDATE, DELETE</li>
+            <li>WHERE conditions, ORDER BY, LIMIT, OFFSET</li>
+            <li>Aggregate functions: COUNT, SUM, AVG, MIN, MAX</li>
+            <li>GROUP BY and HAVING</li>
+            <li>INNER JOIN, LEFT JOIN — understand visually with Venn diagrams</li>
+            <li>Practice: Build a blog database (users, posts, comments, tags)</li>
+          </ul>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-phase">Foundation — Weeks 4–6</div>
+          <h4>Database Design & Normalization</h4>
+          <ul class="checklist">
+            <li>Entity-Relationship (ER) diagrams — draw before you code</li>
+            <li>1NF, 2NF, 3NF normalization rules</li>
+            <li>One-to-many relationships (user → orders)</li>
+            <li>Many-to-many relationships (posts → tags via junction table)</li>
+            <li>Constraints: NOT NULL, UNIQUE, DEFAULT, CHECK</li>
+            <li>Foreign key constraints with ON DELETE CASCADE/RESTRICT</li>
+            <li>Practice: Design e-commerce schema from scratch</li>
+          </ul>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot violet"></div>
+          <div class="tl-phase violet">Backend — Weeks 7–10</div>
+          <h4>Node.js + Express + REST APIs</h4>
+          <ul class="checklist">
+            <li>Node.js fundamentals: async/await, modules, fs, http</li>
+            <li>Express.js: routing, middleware, error handling</li>
+            <li>Connect to PostgreSQL from Node.js (pg library)</li>
+            <li>REST API design: resource naming, HTTP methods, status codes</li>
+            <li>Request validation (Zod or Joi)</li>
+            <li>Environment variables and .env files</li>
+            <li>Build: Full CRUD REST API for a task manager</li>
+          </ul>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot violet"></div>
+          <div class="tl-phase violet">Backend — Weeks 11–13</div>
+          <h4>Authentication Systems</h4>
+          <ul class="checklist">
+            <li>Password hashing with bcrypt (never store plain passwords)</li>
+            <li>JWT (JSON Web Tokens) — access tokens + refresh tokens</li>
+            <li>Session-based auth vs JWT auth — trade-offs</li>
+            <li>OAuth 2.0 / Social login (GitHub, Google) with Passport.js</li>
+            <li>Role-based access control (RBAC)</li>
+            <li>Secure cookies, HTTPS, CORS configuration</li>
+            <li>Build: Auth system from scratch (register, login, refresh, logout)</li>
+          </ul>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot violet"></div>
+          <div class="tl-phase violet">ORM — Week 14</div>
+          <h4>Prisma ORM</h4>
+          <ul class="checklist">
+            <li>Schema definition language (prisma.schema)</li>
+            <li>Database migrations with Prisma Migrate</li>
+            <li>Type-safe queries in TypeScript</li>
+            <li>Relations: one-to-many, many-to-many</li>
+            <li>Prisma Studio — GUI for your database</li>
+            <li>Compare Prisma vs Drizzle ORM — when each makes sense</li>
+          </ul>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot green"></div>
+          <div class="tl-phase green">Intermediate — Weeks 15–17</div>
+          <h4>Indexing + Query Optimization</h4>
+          <ul class="checklist">
+            <li>How indexes work (B-tree structure)</li>
+            <li>EXPLAIN ANALYZE — reading query plans</li>
+            <li>Which columns to index (WHERE, JOIN, ORDER BY)</li>
+            <li>Composite indexes and index selectivity</li>
+            <li>N+1 query problem and how to solve it</li>
+            <li>Connection pooling with PgBouncer</li>
+          </ul>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot green"></div>
+          <div class="tl-phase green">Intermediate — Weeks 18–20</div>
+          <h4>Caching + Redis</h4>
+          <ul class="checklist">
+            <li>Cache-aside pattern (lazy loading)</li>
+            <li>Write-through vs write-behind caching</li>
+            <li>Cache invalidation strategies (TTL, event-based)</li>
+            <li>Redis data structures in practice</li>
+            <li>BullMQ for background job queues</li>
+            <li>Rate limiting with Redis sliding window</li>
+          </ul>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot green"></div>
+          <div class="tl-phase green">Intermediate — Weeks 21–23</div>
+          <h4>GraphQL + MongoDB</h4>
+          <ul class="checklist">
+            <li>GraphQL vs REST — when to choose each</li>
+            <li>Schema definition (types, queries, mutations, subscriptions)</li>
+            <li>Apollo Server with Node.js</li>
+            <li>DataLoader for N+1 prevention in GraphQL</li>
+            <li>MongoDB with Mongoose</li>
+            <li>Aggregation pipeline mastery</li>
+          </ul>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot orange"></div>
+          <div class="tl-phase orange">Advanced — Weeks 24–30</div>
+          <h4>Next.js Backend + Docker + Deployment</h4>
+          <ul class="checklist">
+            <li>Next.js App Router API routes and Server Actions</li>
+            <li>Server components vs client components strategy</li>
+            <li>Containerize with Docker (Dockerfile, docker-compose)</li>
+            <li>CI/CD with GitHub Actions</li>
+            <li>Deploy to Railway, Render, or AWS (RDS + EC2)</li>
+            <li>Environment management, secrets, .env.production</li>
+          </ul>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot orange"></div>
+          <div class="tl-phase orange">Advanced — Weeks 31–40</div>
+          <h4>Security + Scaling + Real-time</h4>
+          <ul class="checklist">
+            <li>SQL injection prevention (parameterized queries)</li>
+            <li>XSS, CSRF protection</li>
+            <li>HTTPS, helmet.js, security headers</li>
+            <li>WebSockets with Socket.io for real-time features</li>
+            <li>Horizontal scaling concepts, load balancers</li>
+            <li>Database replication (primary/replica)</li>
+            <li>Monitoring with Datadog or Grafana + Prometheus</li>
+          </ul>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-dot orange"></div>
+          <div class="tl-phase orange">Mastery — Weeks 41–52</div>
+          <h4>Cloud Databases + Architecture</h4>
+          <ul class="checklist">
+            <li>AWS RDS PostgreSQL, managed services</li>
+            <li>Neon (serverless Postgres), PlanetScale, Turso</li>
+            <li>Microservices vs Monolith — make the right choice</li>
+            <li>Event-driven architecture (Kafka basics)</li>
+            <li>CQRS and Event Sourcing patterns</li>
+            <li>System design interviews preparation</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 3 MONTH ==================== -->
+    <section id="sec-3month" class="section">
+      <div class="page-hero">
+        <div class="tag">Learning Plan</div>
+        <h2><span class="gradient-text">3-Month</span> Intensive Roadmap</h2>
+        <p>For someone dedicating 2–3 hours per day. By month 3 you can build and deploy a real full-stack application.</p>
+      </div>
+      <div class="month-grid">
+        <div class="month-card" style="border-left:3px solid var(--accent)">
+          <div class="month-label">Month 1 — Foundation</div>
+          <ul>
+            <li>SQL fundamentals (1NF-3NF)</li>
+            <li>PostgreSQL setup + pgAdmin</li>
+            <li>SELECT, JOIN, aggregate queries</li>
+            <li>Node.js + npm fundamentals</li>
+            <li>Express.js routing + middleware</li>
+            <li>Connect Node → PostgreSQL (pg)</li>
+            <li>Project: Blog API (full CRUD)</li>
+          </ul>
+        </div>
+        <div class="month-card" style="border-left:3px solid var(--accent2)">
+          <div class="month-label">Month 2 — Backend Core</div>
+          <ul>
+            <li>JWT authentication from scratch</li>
+            <li>Password hashing (bcrypt)</li>
+            <li>Prisma ORM + migrations</li>
+            <li>REST API best practices</li>
+            <li>Input validation (Zod)</li>
+            <li>Redis basics + caching layer</li>
+            <li>Project: Auth + E-commerce API</li>
+          </ul>
+        </div>
+        <div class="month-card" style="border-left:3px solid var(--accent3)">
+          <div class="month-label">Month 3 — Deploy & Scale</div>
+          <ul>
+            <li>Next.js App Router + API routes</li>
+            <li>Docker + docker-compose</li>
+            <li>Deploy to Railway or Render</li>
+            <li>GitHub Actions CI/CD</li>
+            <li>Supabase integration</li>
+            <li>React frontend integration</li>
+            <li>Project: Full-stack SaaS app</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout callout-info"><strong>3-month goal:</strong> By the end, you can build, deploy, and explain a production-quality full-stack app with auth, database, and caching. This is enough for junior/mid-level positions and freelance projects.</div>
+    </section>
+
+    <!-- ==================== 6 MONTH ==================== -->
+    <section id="sec-6month" class="section">
+      <div class="page-hero">
+        <div class="tag">Learning Plan</div>
+        <h2><span class="gradient-text">6-Month</span> Mastery Path</h2>
+        <p>Solidify core skills and add professional-grade capabilities: GraphQL, real-time, testing, and advanced patterns.</p>
+      </div>
+      <div class="month-grid">
+        <div class="month-card" style="border-left:3px solid var(--accent)"><div class="month-label">Month 1</div><ul><li>PostgreSQL deep dive</li><li>Node.js + Express APIs</li><li>Database design</li></ul></div>
+        <div class="month-card" style="border-left:3px solid var(--accent)"><div class="month-label">Month 2</div><ul><li>Auth systems (JWT/OAuth)</li><li>Prisma ORM mastery</li><li>API security</li></ul></div>
+        <div class="month-card" style="border-left:3px solid var(--accent2)"><div class="month-label">Month 3</div><ul><li>Redis + caching patterns</li><li>MongoDB + Mongoose</li><li>Background jobs (BullMQ)</li></ul></div>
+        <div class="month-card" style="border-left:3px solid var(--accent2)"><div class="month-label">Month 4</div><ul><li>GraphQL + Apollo</li><li>Next.js full-stack</li><li>Docker + deployment</li></ul></div>
+        <div class="month-card" style="border-left:3px solid var(--accent3)"><div class="month-label">Month 5</div><ul><li>Testing (Jest, Vitest, Supertest)</li><li>WebSockets + real-time</li><li>Query optimization</li></ul></div>
+        <div class="month-card" style="border-left:3px solid var(--accent3)"><div class="month-label">Month 6</div><ul><li>Cloud databases (AWS RDS)</li><li>Monitoring + logging</li><li>System design fundamentals</li></ul></div>
+      </div>
+      <h3>Skills Unlocked at 6 Months</h3>
+      <div class="card-grid">
+        <div class="card"><h4>Technical Skills</h4><ul class="checklist"><li>Design normalized database schemas</li><li>Build secure, scalable REST + GraphQL APIs</li><li>Implement caching with Redis</li><li>Deploy with Docker + CI/CD</li><li>Write integration and unit tests</li></ul></div>
+        <div class="card"><h4>Career Readiness</h4><ul class="checklist"><li>Ready for mid-level backend roles</li><li>Can freelance confidently</li><li>Able to work on existing codebases</li><li>Can discuss architecture trade-offs</li><li>Portfolio of 5–8 real projects</li></ul></div>
+      </div>
+    </section>
+
+    <!-- ==================== 1 YEAR ==================== -->
+    <section id="sec-1year" class="section">
+      <div class="page-hero">
+        <div class="tag">Learning Plan</div>
+        <h2><span class="gradient-text">1-Year</span> Senior-Level Mastery</h2>
+        <p>Complete mastery path — you'll be capable of designing systems, leading technical decisions, and passing senior engineer interviews.</p>
+      </div>
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-phase">Months 1–3 — Core Stack</div><h4>PostgreSQL + Node.js + Express + Auth + Prisma + Basic Deploy</h4></div>
+        <div class="tl-item"><div class="tl-dot violet"></div><div class="tl-phase violet">Months 4–6 — Advanced Backend</div><h4>Redis + MongoDB + GraphQL + Next.js + Docker + Testing</h4></div>
+        <div class="tl-item"><div class="tl-dot green"></div><div class="tl-phase green">Months 7–9 — Production Engineering</div><h4>Optimization + Security + Real-time + Cloud + Monitoring</h4></div>
+        <div class="tl-item"><div class="tl-dot orange"></div><div class="tl-phase orange">Months 10–12 — Architecture & Mastery</div><h4>System Design + Microservices + Event-Driven + Cloud-Native + Interview Prep</h4></div>
+      </div>
+      <h3>1-Year Capabilities</h3>
+      <div class="card-grid">
+        <div class="card"><h4>Systems Thinking</h4><ul class="checklist"><li>Design distributed systems</li><li>Make database technology decisions</li><li>Architect for scale and reliability</li><li>Evaluate trade-offs like a senior engineer</li></ul></div>
+        <div class="card"><h4>Production Skills</h4><ul class="checklist"><li>Debug production incidents</li><li>Optimize slow queries under pressure</li><li>Set up monitoring and alerting</li><li>Manage database migrations safely</li></ul></div>
+        <div class="card"><h4>Career Level</h4><ul class="checklist"><li>Senior full-stack engineer ready</li><li>Lead backend architecture decisions</li><li>Mentor junior developers</li><li>Pass FAANG-adjacent interviews</li></ul></div>
+      </div>
+    </section>
+
+    <!-- ==================== BACKEND TECH ==================== -->
+    <section id="sec-backend-tech" class="section">
+      <div class="page-hero">
+        <div class="tag">Technologies</div>
+        <h2>Backend <span class="gradient-text">Technology Stack</span></h2>
+        <p>Every tool that pairs with React for production full-stack development.</p>
+      </div>
+
+      <h3>Node.js — The Runtime</h3>
+      <div class="card">
+        <p>Node.js runs JavaScript on the server. It's non-blocking and event-driven — excellent for I/O-heavy applications (APIs, real-time apps). In 2026, Node.js 22+ is stable and widely used. Learn the module system (ESM), async/await deeply, and the built-in http module before reaching for Express.</p>
+        <div class="rating-row">
+          <span class="badge badge-green">Essential</span>
+          <span class="badge badge-cyan">Great with React</span>
+          <span class="badge badge-green">Huge ecosystem</span>
+        </div>
+      </div>
+
+      <h3>Express vs Fastify vs Hono</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Framework</th><th>Performance</th><th>Learning Curve</th><th>Ecosystem</th><th>Best For</th></tr></thead>
+          <tbody>
+            <tr><td class="col-name">Express.js</td><td>Good</td><td><span class="badge badge-green">Easy</span></td><td>Massive</td><td>Learning, most tutorials</td></tr>
+            <tr><td class="col-name">Fastify</td><td>Excellent</td><td><span class="badge badge-orange">Medium</span></td><td>Good</td><td>High-performance APIs</td></tr>
+            <tr><td class="col-name">Hono</td><td>Excellent</td><td><span class="badge badge-green">Easy</span></td><td>Growing fast</td><td>Edge/serverless, Next.js alternative</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout callout-info"><strong>Recommendation:</strong> Learn Express first. Once you understand routing, middleware, and error handling — the concepts transfer to any framework. Many jobs still list Express specifically.</div>
+
+      <h3>ORMs Compared</h3>
+      <div class="card-grid">
+        <div class="card">
+          <h4>Prisma — Best for TypeScript</h4>
+          <ul class="checklist">
+            <li>Schema-first approach (prisma.schema file)</li>
+            <li>Incredible TypeScript autocomplete</li>
+            <li>Auto-generated migrations</li>
+            <li>Prisma Studio GUI for data management</li>
+            <li>Slight overhead vs raw SQL</li>
+          </ul>
+          <div class="rating-row"><span class="badge badge-green">⭐ Best choice 2026</span></div>
+        </div>
+        <div class="card">
+          <h4>Drizzle — The Lightweight Contender</h4>
+          <ul class="checklist">
+            <li>TypeScript-first, SQL-like API</li>
+            <li>Much smaller bundle size than Prisma</li>
+            <li>Better for edge/serverless environments</li>
+            <li>More explicit — closer to raw SQL</li>
+            <li>Growing fast, strong community</li>
+          </ul>
+          <div class="rating-row"><span class="badge badge-cyan">⭐ Learn after Prisma</span></div>
+        </div>
+        <div class="card">
+          <h4>Sequelize — The Legacy ORM</h4>
+          <ul class="checklist">
+            <li>JavaScript-first (TypeScript is an afterthought)</li>
+            <li>Huge amount of existing codebases use it</li>
+            <li>More complex API than Prisma</li>
+            <li>Learn it only if hired into a team using it</li>
+          </ul>
+          <div class="rating-row"><span class="badge badge-orange">Learn for jobs only</span></div>
+        </div>
+      </div>
+
+      <h3>Next.js as a Full-Stack Framework</h3>
+      <div class="card">
+        <p>Next.js App Router (2024+) has changed full-stack development. You can now write server-side logic, database queries, and React UI in the same project — even in the same file with Server Components and Server Actions.</p>
+        <div class="code-block">
+<span class="cmt">// Next.js Server Action — runs on the server, called from React</span>
+<span class="str">'use server'</span>
+
+<span class="kw">export async function</span> <span class="fn">createPost</span>(formData) {
+  <span class="kw">const</span> title = formData.<span class="fn">get</span>(<span class="str">'title'</span>);
+  <span class="kw">const</span> session = <span class="kw">await</span> <span class="fn">getSession</span>();
+
+  <span class="kw">const</span> post = <span class="kw">await</span> prisma.post.<span class="fn">create</span>({
+    data: { title, authorId: session.userId }
+  });
+
+  <span class="fn">revalidatePath</span>(<span class="str">'/posts'</span>);
+  <span class="fn">redirect</span>(<span class="str">`/posts/${post.id}`</span>);
+}
+        </div>
+      </div>
+
+      <h3>Docker — Containerize Everything</h3>
+      <div class="card">
+        <p>Docker solves "it works on my machine." Every production engineer needs to understand containers. Start with docker-compose for local development — run PostgreSQL, Redis, and your API together with one command.</p>
+        <div class="code-block">
+<span class="cmt"># docker-compose.yml — development environment</span>
+<span class="kw">version</span>: <span class="str">'3.8'</span>
+<span class="kw">services</span>:
+  <span class="kw">postgres</span>:
+    <span class="kw">image</span>: postgres:16
+    <span class="kw">environment</span>:
+      POSTGRES_DB: myapp
+      POSTGRES_PASSWORD: devpassword
+    <span class="kw">ports</span>: [<span class="str">'5432:5432'</span>]
+    <span class="kw">volumes</span>: [pgdata:/var/lib/postgresql/data]
+
+  <span class="kw">redis</span>:
+    <span class="kw">image</span>: redis:7-alpine
+    <span class="kw">ports</span>: [<span class="str">'6379:6379'</span>]
+
+  <span class="kw">api</span>:
+    <span class="kw">build</span>: .
+    <span class="kw">ports</span>: [<span class="str">'3001:3001'</span>]
+    <span class="kw">depends_on</span>: [postgres, redis]
+    <span class="kw">environment</span>:
+      DATABASE_URL: postgresql://postgres:devpassword@postgres:5432/myapp
+
+<span class="kw">volumes</span>:
+  pgdata:
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== STACKS ==================== -->
+    <section id="sec-stacks" class="section">
+      <div class="page-hero">
+        <div class="tag">Modern Stacks</div>
+        <h2>Production <span class="gradient-text">Tech Stacks</span></h2>
+        <p>The most used full-stack combinations in 2026 — pros, cons, and when to choose each.</p>
+      </div>
+
+      <div class="stack-card">
+        <h4>🍃 MERN Stack</h4>
+        <p>MongoDB · Express · React · Node.js</p>
+        <div class="stack-layers">
+          <span class="stack-layer">MongoDB</span><span class="stack-layer">Express.js</span><span class="stack-layer">React</span><span class="stack-layer">Node.js</span>
+        </div>
+        <p style="margin-top:12px">The classic NoSQL full-stack. Still popular in bootcamps and job listings. MongoDB's flexible schema speeds up early development. Best when your data is truly document-like and you need horizontal scale from day one.</p>
+        <div class="rating-row"><span class="badge badge-green">Great for bootcamps</span><span class="badge badge-orange">NoSQL trade-offs</span><span class="badge badge-cyan">Many job listings</span></div>
+      </div>
+
+      <div class="stack-card">
+        <h4>🐘 PERN Stack</h4>
+        <p>PostgreSQL · Express · React · Node.js</p>
+        <div class="stack-layers">
+          <span class="stack-layer">PostgreSQL</span><span class="stack-layer">Express.js</span><span class="stack-layer">React</span><span class="stack-layer">Node.js</span>
+        </div>
+        <p style="margin-top:12px">The professional's choice. SQL reliability + React flexibility. Add Prisma as ORM and you have the most employable skill set in 2026 backend development. Most startups building "properly" are on some variant of this.</p>
+        <div class="rating-row"><span class="badge badge-green">⭐ Recommended 2026</span><span class="badge badge-green">Most employable</span><span class="badge badge-violet">Scalable</span></div>
+      </div>
+
+      <div class="stack-card">
+        <h4>🔺 T3 Stack</h4>
+        <p>Next.js · TypeScript · tRPC · Prisma · Tailwind · NextAuth</p>
+        <div class="stack-layers">
+          <span class="stack-layer">Next.js</span><span class="stack-layer">TypeScript</span><span class="stack-layer">tRPC</span><span class="stack-layer">Prisma</span><span class="stack-layer">Tailwind</span><span class="stack-layer">NextAuth</span>
+        </div>
+        <p style="margin-top:12px">The end-to-end type-safe stack. tRPC gives you automatic TypeScript types from backend to frontend — no more mismatched API contracts. Extremely popular in the TypeScript community. Perfect for teams that value developer experience.</p>
+        <div class="rating-row"><span class="badge badge-violet">TypeScript-first</span><span class="badge badge-cyan">End-to-end types</span><span class="badge badge-orange">Learning curve</span></div>
+      </div>
+
+      <div class="stack-card">
+        <h4>🚀 Next.js + PostgreSQL (via Supabase)</h4>
+        <p>Next.js · Supabase · Tailwind · TypeScript</p>
+        <div class="stack-layers">
+          <span class="stack-layer">Next.js App Router</span><span class="stack-layer">Supabase</span><span class="stack-layer">Tailwind CSS</span><span class="stack-layer">TypeScript</span>
+        </div>
+        <p style="margin-top:12px">The fastest path to production for solo developers and small teams. Supabase gives you auth, database, storage, and real-time out of the box. You focus on product. Increasingly used by YC startups for launching fast.</p>
+        <div class="rating-row"><span class="badge badge-green">⭐ Best for startups</span><span class="badge badge-green">Fastest to deploy</span><span class="badge badge-cyan">Excellent DX</span></div>
+      </div>
+
+      <div class="stack-card">
+        <h4>⚙️ Microservices Stack</h4>
+        <p>Multiple Node.js services · PostgreSQL per service · Redis · Docker · K8s</p>
+        <div class="stack-layers">
+          <span class="stack-layer">API Gateway</span><span class="stack-layer">Auth Service</span><span class="stack-layer">Product Service</span><span class="stack-layer">Order Service</span><span class="stack-layer">Redis Pub/Sub</span><span class="stack-layer">Kubernetes</span>
+        </div>
+        <p style="margin-top:12px">For large teams and products. Each service owns its own database. Services communicate via REST, gRPC, or events (Kafka). <strong style="color:var(--warn)">Don't start here</strong> — start with a monolith and extract services when you have genuine scaling pain.</p>
+        <div class="rating-row"><span class="badge badge-red">Advanced only</span><span class="badge badge-orange">High operational overhead</span></div>
+      </div>
+    </section>
+
+    <!-- ==================== ARCHITECTURE ==================== -->
+    <section id="sec-architecture" class="section">
+      <div class="page-hero">
+        <div class="tag">System Design</div>
+        <h2>Backend <span class="gradient-text">Architecture</span></h2>
+        <p>How production systems are structured — from simple monoliths to distributed systems.</p>
+      </div>
+
+      <h3>Standard Web App Architecture</h3>
+      <div class="arch-diagram">
+        <div style="text-align:center;margin-bottom:12px">
+          <span class="box cyan">Browser (React)</span>
+        </div>
+        <div style="text-align:center;margin-bottom:12px">↕ HTTPS</div>
+        <div style="text-align:center;margin-bottom:12px">
+          <span class="box violet">CDN / Load Balancer (Nginx / CloudFront)</span>
+        </div>
+        <div style="text-align:center;margin-bottom:12px">
+          <span class="box">Node.js / Express API Server</span>
+          <span class="box">Node.js / Express API Server</span>
+        </div>
+        <div style="text-align:center;margin-bottom:12px">
+          <span class="box orange">Redis (Cache + Sessions + Queues)</span>
+        </div>
+        <div style="text-align:center">
+          <span class="box green">PostgreSQL Primary</span>
+          <span class="box">PostgreSQL Replica (Read)</span>
+        </div>
+      </div>
+
+      <h3>Request Lifecycle</h3>
+      <div class="card">
+        <ol style="list-style:decimal;padding-left:20px;color:var(--muted)">
+          <li style="padding:6px 0"><strong style="color:var(--text)">Browser → CDN:</strong> Static assets (JS, CSS) served from edge cache (near user)</li>
+          <li style="padding:6px 0"><strong style="color:var(--text)">API Request → Load Balancer:</strong> Routes to least-loaded server instance</li>
+          <li style="padding:6px 0"><strong style="color:var(--text)">Middleware:</strong> Auth check (verify JWT), rate limit check (Redis), logging</li>
+          <li style="padding:6px 0"><strong style="color:var(--text)">Cache check:</strong> Does Redis have this response? Return immediately if yes</li>
+          <li style="padding:6px 0"><strong style="color:var(--text)">Database query:</strong> Reads from replica, writes to primary</li>
+          <li style="padding:6px 0"><strong style="color:var(--text)">Cache store:</strong> Store result in Redis with TTL</li>
+          <li style="padding:6px 0"><strong style="color:var(--text)">Response:</strong> JSON → browser → React updates UI</li>
+        </ol>
+      </div>
+
+      <h3>GraphQL vs REST — When to Choose</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Situation</th><th>Choose REST</th><th>Choose GraphQL</th></tr></thead>
+          <tbody>
+            <tr><td class="col-name">Team size</td><td>Any size</td><td>Multiple frontend teams</td></tr>
+            <tr><td class="col-name">Mobile + Web different data needs</td><td><span class="no">✗ Over-fetching</span></td><td><span class="yes">✓ Request exactly what you need</span></td></tr>
+            <tr><td class="col-name">Caching</td><td><span class="yes">✓ HTTP caching built-in</span></td><td><span class="maybe">⚠ More complex</span></td></tr>
+            <tr><td class="col-name">Learning curve</td><td><span class="yes">✓ Simpler</span></td><td><span class="no">✗ Steeper</span></td></tr>
+            <tr><td class="col-name">File uploads</td><td><span class="yes">✓ Easy</span></td><td><span class="no">✗ Complex</span></td></tr>
+            <tr><td class="col-name">Real-time</td><td><span class="maybe">⚠ WebSockets separately</span></td><td><span class="yes">✓ Subscriptions built-in</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ==================== PROJECTS ==================== -->
+    <section id="sec-projects" class="section">
+      <div class="page-hero">
+        <div class="tag">Project-Based Learning</div>
+        <h2>Build <span class="gradient-text">Real Projects</span></h2>
+        <p>The only way to truly learn backend development. Build these in order.</p>
+      </div>
+
+      <h3>🟢 Beginner Projects</h3>
+      <div class="card-grid">
+        <div class="card">
+          <h4>1. Blog API</h4>
+          <p><strong>Stack:</strong> Node.js + Express + PostgreSQL (raw pg)</p>
+          <ul class="checklist">
+            <li>Users, posts, comments tables</li>
+            <li>Full CRUD for posts</li>
+            <li>Basic JOIN queries for author info</li>
+            <li>Pagination with LIMIT/OFFSET</li>
+          </ul>
+          <div class="rating-row"><span class="badge badge-green">Week 3–4 project</span></div>
+        </div>
+        <div class="card">
+          <h4>2. Todo API with Auth</h4>
+          <p><strong>Stack:</strong> Express + PostgreSQL + JWT</p>
+          <ul class="checklist">
+            <li>User registration + login</li>
+            <li>JWT middleware on protected routes</li>
+            <li>Each user sees only their todos</li>
+            <li>Row-level data ownership</li>
+          </ul>
+          <div class="rating-row"><span class="badge badge-green">Week 6–8 project</span></div>
+        </div>
+        <div class="card">
+          <h4>3. URL Shortener</h4>
+          <p><strong>Stack:</strong> Express + PostgreSQL + Redis</p>
+          <ul class="checklist">
+            <li>Generate short codes</li>
+            <li>Redirect tracking + click analytics</li>
+            <li>Cache hot URLs in Redis</li>
+            <li>Rate limiting per IP</li>
+          </ul>
+          <div class="rating-row"><span class="badge badge-green">Week 10 project</span></div>
+        </div>
+      </div>
+
+      <h3>🟡 Intermediate Projects</h3>
+      <div class="card-grid">
+        <div class="card">
+          <h4>4. E-Commerce Backend</h4>
+          <p><strong>Stack:</strong> Node.js + PostgreSQL + Prisma + Redis</p>
+          <ul class="checklist">
+            <li>Products, categories, inventory</li>
+            <li>Orders with line items (transactions)</li>
+            <li>Cart management in Redis</li>
+            <li>Payment webhook handling</li>
+            <li>Admin vs customer roles</li>
+          </ul>
+          <div class="rating-row"><span class="badge badge-orange">Month 3–4 project</span></div>
+        </div>
+        <div class="card">
+          <h4>5. Real-Time Chat App</h4>
+          <p><strong>Stack:</strong> Node.js + Socket.io + PostgreSQL + Redis Pub/Sub</p>
+          <ul class="checklist">
+            <li>WebSocket connections with rooms</li>
+            <li>Message persistence to PostgreSQL</li>
+            <li>Online presence tracking (Redis)</li>
+            <li>Message history on join</li>
+          </ul>
+          <div class="rating-row"><span class="badge badge-orange">Month 4–5 project</span></div>
+        </div>
+        <div class="card">
+          <h4>6. Job Board (GraphQL)</h4>
+          <p><strong>Stack:</strong> Apollo Server + PostgreSQL + Prisma</p>
+          <ul class="checklist">
+            <li>GraphQL schema design</li>
+            <li>Queries, mutations, subscriptions</li>
+            <li>N+1 prevention with DataLoader</li>
+            <li>File upload for resumes</li>
+          </ul>
+          <div class="rating-row"><span class="badge badge-orange">Month 5 project</span></div>
+        </div>
+      </div>
+
+      <h3>🔴 Advanced Production Projects</h3>
+      <div class="card-grid">
+        <div class="card">
+          <h4>7. SaaS Platform</h4>
+          <p><strong>Stack:</strong> Next.js + Supabase + Stripe + Resend</p>
+          <ul class="checklist">
+            <li>Multi-tenancy (organization-based)</li>
+            <li>Subscription billing with Stripe</li>
+            <li>Email with transactional service</li>
+            <li>Feature flags and plan-based access</li>
+            <li>Admin dashboard with analytics</li>
+          </ul>
+          <div class="rating-row"><span class="badge badge-red">Month 7–9 project</span></div>
+        </div>
+        <div class="card">
+          <h4>8. Notification System</h4>
+          <p><strong>Stack:</strong> Node.js + BullMQ + Redis + PostgreSQL</p>
+          <ul class="checklist">
+            <li>Background job queue architecture</li>
+            <li>Email + push notification workers</li>
+            <li>Retry logic with exponential backoff</li>
+            <li>Dead letter queue handling</li>
+            <li>Job monitoring dashboard</li>
+          </ul>
+          <div class="rating-row"><span class="badge badge-red">Month 8 project</span></div>
+        </div>
+        <div class="card">
+          <h4>9. Analytics Service</h4>
+          <p><strong>Stack:</strong> Node.js + TimescaleDB + Redis + ClickHouse</p>
+          <ul class="checklist">
+            <li>Time-series data ingestion at scale</li>
+            <li>Aggregation queries on large datasets</li>
+            <li>Dashboard with real-time metrics</li>
+            <li>CQRS pattern (separate read/write)</li>
+          </ul>
+          <div class="rating-row"><span class="badge badge-red">Month 10+ project</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== RESOURCES ==================== -->
+    <section id="sec-resources" class="section">
+      <div class="page-hero">
+        <div class="tag">Learning Materials</div>
+        <h2>Best <span class="gradient-text">Resources</span> 2026</h2>
+        <p>Curated resources — no filler, no outdated courses. Only what actually works.</p>
+      </div>
+
+      <h3>📚 Free Resources</h3>
+      <div class="card">
+        <ul class="resource-list">
+          <li><span class="res-name">PostgreSQL Official Docs</span><span class="badge badge-green res-type">Free · Essential</span></li>
+          <li><span class="res-name">Prisma Docs + Schema Reference</span><span class="badge badge-green res-type">Free · Essential</span></li>
+          <li><span class="res-name">Node.js Official Docs</span><span class="badge badge-green res-type">Free · Essential</span></li>
+          <li><span class="res-name">SQLZoo / Mode SQL Tutorial</span><span class="badge badge-cyan res-type">Free · Interactive</span></li>
+          <li><span class="res-name">freeCodeCamp Backend APIs Cert</span><span class="badge badge-cyan res-type">Free · Structured</span></li>
+          <li><span class="res-name">The Odin Project (Full Stack)</span><span class="badge badge-cyan res-type">Free · Project-based</span></li>
+          <li><span class="res-name">Supabase Documentation + Tutorials</span><span class="badge badge-green res-type">Free · Modern</span></li>
+          <li><span class="res-name">Redis University (Redis.io)</span><span class="badge badge-green res-type">Free · Official</span></li>
+          <li><span class="res-name">Execute Program (SQL course)</span><span class="badge badge-cyan res-type">Free tier · Spaced repetition</span></li>
+        </ul>
+      </div>
+
+      <h3>🎥 YouTube Channels</h3>
+      <div class="card">
+        <ul class="resource-list">
+          <li><span class="res-name">Fireship — Short, dense, modern concepts</span><span class="badge badge-violet res-type">YouTube · Free</span></li>
+          <li><span class="res-name">Traversy Media — Beginner-friendly tutorials</span><span class="badge badge-violet res-type">YouTube · Free</span></li>
+          <li><span class="res-name">Jack Herrington — Advanced React + TypeScript</span><span class="badge badge-violet res-type">YouTube · Free</span></li>
+          <li><span class="res-name">Theo (t3.gg) — Modern full-stack opinions</span><span class="badge badge-violet res-type">YouTube · Free</span></li>
+          <li><span class="res-name">Hussein Nasser — Database + networking deep dives</span><span class="badge badge-violet res-type">YouTube · Free</span></li>
+          <li><span class="res-name">Hnasr (Hussain) — System design explanations</span><span class="badge badge-violet res-type">YouTube · Free</span></li>
+          <li><span class="res-name">Web Dev Simplified — Practical projects</span><span class="badge badge-violet res-type">YouTube · Free</span></li>
+        </ul>
+      </div>
+
+      <h3>💳 Paid Courses (Worth It)</h3>
+      <div class="card">
+        <ul class="resource-list">
+          <li><span class="res-name">Jonas Schmedtmann — SQL + PostgreSQL Bootcamp (Udemy)</span><span class="badge badge-orange res-type">Paid · Best SQL course</span></li>
+          <li><span class="res-name">Stephen Grider — NodeJS: Advanced Concepts (Udemy)</span><span class="badge badge-orange res-type">Paid · Deep Node.js</span></li>
+          <li><span class="res-name">Matt Pocock — Total TypeScript</span><span class="badge badge-orange res-type">Paid · TypeScript mastery</span></li>
+          <li><span class="res-name">Bytebytego (Alex Xu) — System Design</span><span class="badge badge-orange res-type">Paid · Architecture</span></li>
+          <li><span class="res-name">Educative.io — System Design Interview Course</span><span class="badge badge-orange res-type">Paid · Interview prep</span></li>
+        </ul>
+      </div>
+
+      <h3>📖 Books</h3>
+      <div class="card">
+        <ul class="resource-list">
+          <li><span class="res-name">Designing Data-Intensive Applications — Martin Kleppmann</span><span class="badge badge-pink res-type">Book · Essential</span></li>
+          <li><span class="res-name">The Art of PostgreSQL — Dimitri Fontaine</span><span class="badge badge-pink res-type">Book · SQL mastery</span></li>
+          <li><span class="res-name">System Design Interview (Vol 1 & 2) — Alex Xu</span><span class="badge badge-pink res-type">Book · Interview prep</span></li>
+          <li><span class="res-name">Node.js Design Patterns — Casciaro & Mammino</span><span class="badge badge-pink res-type">Book · Advanced Node.js</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ==================== CAREER ==================== -->
+    <section id="sec-career" class="section">
+      <div class="page-hero">
+        <div class="tag">Career Strategy</div>
+        <h2>Practical <span class="gradient-text">Career Advice</span></h2>
+        <p>What actually matters in the job market vs what's overhyped. Based on real hiring data in 2026.</p>
+      </div>
+
+      <h3>Employability Rankings — 2026</h3>
+      <div class="career-grid">
+        <div class="career-card">
+          <h4>PostgreSQL</h4>
+          <div class="emp-bar"><div class="emp-fill" style="width:95%;background:var(--accent3)"></div></div>
+          <p style="font-size:12px;color:var(--muted)">95% — Listed in nearly every backend job posting. Essential skill.</p>
+          <span class="badge badge-green">Essential</span>
+        </div>
+        <div class="career-card">
+          <h4>Node.js + Express</h4>
+          <div class="emp-bar"><div class="emp-fill" style="width:90%;background:var(--accent3)"></div></div>
+          <p style="font-size:12px;color:var(--muted)">90% — Dominant in full-stack and backend roles.</p>
+          <span class="badge badge-green">Essential</span>
+        </div>
+        <div class="career-card">
+          <h4>TypeScript</h4>
+          <div class="emp-bar"><div class="emp-fill" style="width:88%;background:var(--accent)"></div></div>
+          <p style="font-size:12px;color:var(--muted)">88% — Now default in most professional codebases.</p>
+          <span class="badge badge-cyan">High priority</span>
+        </div>
+        <div class="career-card">
+          <h4>Redis</h4>
+          <div class="emp-bar"><div class="emp-fill" style="width:75%;background:var(--accent)"></div></div>
+          <p style="font-size:12px;color:var(--muted)">75% — Expected knowledge for mid-senior roles.</p>
+          <span class="badge badge-cyan">Important</span>
+        </div>
+        <div class="career-card">
+          <h4>Docker</h4>
+          <div class="emp-bar"><div class="emp-fill" style="width:80%;background:var(--accent2)"></div></div>
+          <p style="font-size:12px;color:var(--muted)">80% — Containers are standard now.</p>
+          <span class="badge badge-violet">Standard</span>
+        </div>
+        <div class="career-card">
+          <h4>MongoDB</h4>
+          <div class="emp-bar"><div class="emp-fill" style="width:60%;background:var(--accent4)"></div></div>
+          <p style="font-size:12px;color:var(--muted)">60% — Still common, especially startups & MERN roles.</p>
+          <span class="badge badge-orange">Useful</span>
+        </div>
+        <div class="career-card">
+          <h4>GraphQL</h4>
+          <div class="emp-bar"><div class="emp-fill" style="width:45%;background:var(--accent4)"></div></div>
+          <p style="font-size:12px;color:var(--muted)">45% — Nice to have, especially at larger companies.</p>
+          <span class="badge badge-orange">Learn after core</span>
+        </div>
+        <div class="career-card">
+          <h4>Firebase</h4>
+          <div class="emp-bar"><div class="emp-fill" style="width:30%;background:var(--danger)"></div></div>
+          <p style="font-size:12px;color:var(--muted)">30% — Less valued in hiring than other skills.</p>
+          <span class="badge badge-red">Low priority</span>
+        </div>
+      </div>
+
+      <h3>What's Overhyped in 2026</h3>
+      <div class="callout callout-warn">
+        <strong>MongoDB-only developers</strong> — "I know Mongoose" without SQL knowledge is a red flag for experienced interviewers. Always learn SQL first.
+      </div>
+      <div class="callout callout-warn">
+        <strong>Framework hopping</strong> — Switching to every new framework (Bun, Hono, Elysia, etc.) before mastering fundamentals. Master Express + Node.js first. Concepts transfer.
+      </div>
+      <div class="callout callout-warn">
+        <strong>Microservices for solo projects</strong> — Building a distributed system for a portfolio app is over-engineering. Employers want to see you understand trade-offs, not that you blindly added complexity.
+      </div>
+
+      <h3>For Freelancing</h3>
+      <div class="card-grid">
+        <div class="card"><h4>Best Stack</h4><ul class="checklist"><li>Next.js + Supabase — fastest time to deploy</li><li>Stripe for payments (in every client project)</li><li>Resend/Postmark for transactional email</li><li>Vercel/Railway for hosting (minimal DevOps)</li></ul></div>
+        <div class="card"><h4>Best Freelance Niches</h4><ul class="checklist"><li>SaaS MVPs for non-technical founders</li><li>E-commerce integrations (Shopify + custom backend)</li><li>Admin dashboards + internal tools</li><li>API development for mobile apps</li></ul></div>
+      </div>
+
+      <h3>Future-Proof Skills (5+ Year Horizon)</h3>
+      <ul class="checklist">
+        <li>PostgreSQL — has been growing for 30 years, will continue</li>
+        <li>SQL fundamentals — not going anywhere, universal language</li>
+        <li>TypeScript — the clear winner of JS's "should we have types" debate</li>
+        <li>System design fundamentals — trade-offs never change, just tools do</li>
+        <li>Linux/Docker/cloud infrastructure — containers are permanent</li>
+      </ul>
+    </section>
+
+    <!-- ==================== MISTAKES ==================== -->
+    <section id="sec-mistakes" class="section">
+      <div class="page-hero">
+        <div class="tag">Avoid These</div>
+        <h2>Common <span class="gradient-text">Beginner Mistakes</span></h2>
+        <p>What separates developers who grow fast from those who stay stuck. Learn from others' mistakes.</p>
+      </div>
+
+      <h3>Database Mistakes</h3>
+      <div class="card">
+        <h4>🚫 Not using parameterized queries (SQL Injection)</h4>
+        <div class="code-block">
+<span class="cmt">// ❌ NEVER do this — SQL injection vulnerability</span>
+<span class="kw">const</span> query = <span class="str">`SELECT * FROM users WHERE email = '${email}'`</span>;
+
+<span class="cmt">// ✅ Always use parameterized queries</span>
+<span class="kw">const</span> query = <span class="str">'SELECT * FROM users WHERE email = $1'</span>;
+<span class="kw">const</span> result = <span class="kw">await</span> db.<span class="fn">query</span>(query, [email]);
+        </div>
+      </div>
+      <div class="card">
+        <h4>🚫 Selecting everything with SELECT *</h4>
+        <p>SELECT * returns all columns including ones you don't need — wastes bandwidth and prevents index-only scans. Always select specific columns.</p>
+      </div>
+      <div class="card">
+        <h4>🚫 No indexes on foreign keys</h4>
+        <p>PostgreSQL does NOT automatically index foreign key columns. Every JOIN query on a foreign key without an index does a full table scan.</p>
+        <div class="code-block">
+<span class="cmt">-- Add indexes on FK columns you JOIN on</span>
+<span class="kw">CREATE INDEX</span> idx_orders_user_id <span class="kw">ON</span> orders(user_id);
+<span class="kw">CREATE INDEX</span> idx_comments_post_id <span class="kw">ON</span> comments(post_id);
+        </div>
+      </div>
+
+      <h3>Architecture Mistakes</h3>
+      <div class="card">
+        <h4>🚫 Storing passwords in plain text</h4>
+        <p>Always hash passwords with bcrypt (cost factor 12+). Never log passwords. Never store them in plaintext or with reversible encryption.</p>
+      </div>
+      <div class="card">
+        <h4>🚫 Putting business logic in the database</h4>
+        <p>Stored procedures and triggers make your app tightly coupled to the database. Keep business logic in application code where it's testable and version-controlled.</p>
+      </div>
+      <div class="card">
+        <h4>🚫 Not handling database errors</h4>
+        <p>Unique constraint violations, foreign key violations, and deadlocks WILL happen in production. Your API must catch and handle them gracefully instead of crashing.</p>
+      </div>
+      <div class="card">
+        <h4>🚫 The N+1 query problem</h4>
+        <div class="code-block">
+<span class="cmt">// ❌ N+1 — 1 query for posts + N queries for each author</span>
+<span class="kw">const</span> posts = <span class="kw">await</span> db.<span class="fn">query</span>(<span class="str">'SELECT * FROM posts'</span>);
+<span class="kw">for</span> (<span class="kw">const</span> post <span class="kw">of</span> posts) {
+  post.author = <span class="kw">await</span> db.<span class="fn">query</span>(<span class="str">'SELECT * FROM users WHERE id=$1'</span>, [post.user_id]);
+}
+
+<span class="cmt">// ✅ 1 query with JOIN</span>
+<span class="kw">const</span> posts = <span class="kw">await</span> db.<span class="fn">query</span>(<span class="str">`
+  SELECT posts.*, users.name AS author_name, users.avatar
+  FROM posts
+  JOIN users ON posts.user_id = users.id
+`</span>);
+        </div>
+      </div>
+
+      <h3>Learning Mistakes</h3>
+      <div class="card">
+        <h4>🚫 Tutorial hell — watching without building</h4>
+        <p>Watching 50 hours of tutorials without building a single original project. After each tutorial, immediately build something DIFFERENT using the same concepts.</p>
+      </div>
+      <div class="card">
+        <h4>🚫 Skipping SQL to learn MongoDB first</h4>
+        <p>SQL teaches you to think about data relationships. MongoDB lets you skip that thinking — and that's why many MongoDB applications have terrible data models. Learn SQL first, always.</p>
+      </div>
+      <div class="card">
+        <h4>🚫 Not reading error messages</h4>
+        <p>Most beginners see a red error and immediately Google it or paste it into ChatGPT. First: read the full error. Then: check the stack trace. Then: search. You'll solve 50% of problems yourself by just reading carefully.</p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ===== OVERLAY for mobile ===== -->
+<div id="overlay" onclick="closeSidebar()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:99"></div>
+
+<script>
+  /* ============ Navigation ============ */
+  function show(page) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById('sec-' + page).classList.add('active');
+    event.currentTarget.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    closeSidebar();
+    // Save last page
+    try { localStorage.setItem('lastPage', page); } catch(e) {}
+  }
+
+  /* ============ Mobile Sidebar ============ */
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('overlay').style.display =
+      document.getElementById('sidebar').classList.contains('open') ? 'block' : 'none';
+  }
+  function closeSidebar() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('overlay').style.display = 'none';
+  }
+
+  /* ============ Restore last page ============ */
+  window.addEventListener('DOMContentLoaded', () => {
+    try {
+      const last = localStorage.getItem('lastPage');
+      if (last && document.getElementById('sec-' + last)) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        document.getElementById('sec-' + last).classList.add('active');
+      }
+    } catch(e) {}
+  });
+
+  /* ============ PWA Install ============ */
+  let deferredPrompt;
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    document.getElementById('installBtn').classList.add('show');
+  });
+
+  async function installPWA() {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') {
+      document.getElementById('installBtn').classList.remove('show');
+    }
+    deferredPrompt = null;
+  }
+
+  /* ============ Service Worker ============ */
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  }
+</script>
+</body>
+</html>

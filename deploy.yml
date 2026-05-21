@@ -1,0 +1,84 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy PWA to GitHub Pages
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Generate PWA icons
+        run: |
+          # Create icon directory
+          mkdir -p assets/icons
+
+          # Generate SVG icon
+          cat > /tmp/icon.svg << 'SVGEOF'
+          <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+            <rect width="512" height="512" rx="80" fill="#050912"/>
+            <rect x="60" y="60" width="392" height="392" rx="40" fill="#0b1120" stroke="#1e2d4a" stroke-width="2"/>
+            <!-- Grid lines -->
+            <line x1="60" y1="180" x2="452" y2="180" stroke="#1e2d4a" stroke-width="1" opacity="0.5"/>
+            <line x1="60" y1="256" x2="452" y2="256" stroke="#1e2d4a" stroke-width="1" opacity="0.5"/>
+            <line x1="60" y1="332" x2="452" y2="332" stroke="#1e2d4a" stroke-width="1" opacity="0.5"/>
+            <!-- DB cylinder -->
+            <ellipse cx="256" cy="160" rx="80" ry="20" fill="#141f35" stroke="#38bdf8" stroke-width="2"/>
+            <rect x="176" y="160" width="160" height="80" fill="#141f35" stroke="#38bdf8" stroke-width="2"/>
+            <ellipse cx="256" cy="240" rx="80" ry="20" fill="#141f35" stroke="#38bdf8" stroke-width="2"/>
+            <!-- Arrow down -->
+            <line x1="256" y1="270" x2="256" y2="330" stroke="#a78bfa" stroke-width="3"/>
+            <polygon points="256,345 244,322 268,322" fill="#a78bfa"/>
+            <!-- React atom -->
+            <circle cx="256" cy="380" r="12" fill="#38bdf8"/>
+            <ellipse cx="256" cy="380" rx="36" ry="12" fill="none" stroke="#38bdf8" stroke-width="2" opacity="0.7"/>
+            <ellipse cx="256" cy="380" rx="36" ry="12" fill="none" stroke="#38bdf8" stroke-width="2" opacity="0.7" transform="rotate(60 256 380)"/>
+            <ellipse cx="256" cy="380" rx="36" ry="12" fill="none" stroke="#38bdf8" stroke-width="2" opacity="0.7" transform="rotate(120 256 380)"/>
+            <!-- Text -->
+            <text x="256" y="108" text-anchor="middle" fill="#38bdf8" font-family="monospace" font-size="20" font-weight="bold">FS ROADMAP</text>
+            <text x="256" y="130" text-anchor="middle" fill="#6b83a8" font-family="monospace" font-size="12">2026</text>
+          </svg>
+          SVGEOF
+
+          # Use ImageMagick to convert SVG to PNG (available on ubuntu-latest)
+          if command -v convert &> /dev/null; then
+            convert -background none /tmp/icon.svg -resize 192x192 assets/icons/icon-192.png
+            convert -background none /tmp/icon.svg -resize 512x512 assets/icons/icon-512.png
+          else
+            # Fallback: copy SVG as placeholder
+            cp /tmp/icon.svg assets/icons/icon-192.png || true
+            cp /tmp/icon.svg assets/icons/icon-512.png || true
+          fi
+
+          echo "Icons generated successfully"
+          ls -la assets/icons/
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
